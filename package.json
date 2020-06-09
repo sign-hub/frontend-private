@@ -40,7 +40,7 @@
     "core-js": "^2.6.5",
     "fabric": "^2.7.0",
     "jodit": "^3.3.24",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "mydatepicker": "^2.6.6",
