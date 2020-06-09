@@ -1,0 +1,221 @@
+<div class="slide-head" [ngStyle]="{'min-height': hieghtQuestion}">
+  <div class="s-left" [ngStyle]="{'min-height': hieghtQuestion}">
+    <div class="item-component drag-component" (onDragStart)="ondragstart(null)"  dnd-draggable [dragData]="{'type': 'TEXT', 'updated': false}">
+      <i class="material-icons">&#xE167;</i> Input field
+    </div>
+    <div class="item-component drag-component" (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'TEXTAREA', 'updated': false}">
+      <i class="material-icons">&#xE167;</i> Text area
+    </div>
+    <div class="item-component drag-component" (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'CLICK_AREA', 'updated': false}">
+      <i class="material-icons">&#xE434;</i> Clickable area
+    </div>
+    <div class="item-component drag-component" (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'UPLOADS', 'updated': false}">
+        <i class="material-icons">&#xE434;</i> Uploads area
+      </div>
+    <div class="item-component drag-component" (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'RADIO', 'updated': false}">
+      <i class="material-icons">&#xE837;</i> Radio
+    </div>
+    <div class="item-component drag-component" (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'CHECKBOX', 'updated': false}">
+      <i class="material-icons">&#xE834;</i>Checkbox
+    </div>
+    <div class="item-component drag-component" (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'CHECKABLETABLE', 'updated': false}">
+        <i class="material-icons">&#xE021;</i> Table
+      </div>
+    <div class="item-component drag-component" (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'RANGE', 'updated': false}">
+      <i class="material-icons">&#xE8D4;</i> Range slider
+    </div>
+    <div class="item-component drag-component" (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'TEXTBLOCK', 'updated': false}">
+        <i class="material-icons">&#xE167;</i> Text Block
+      </div>
+      <div class="item-component drag-component" (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'BUTTON', 'updated': false}">
+          <i class="material-icons">&#xE167;</i> Button
+        </div>
+  </div>
+  <div class="s-center" [ngStyle]="{'height': heightQuestionCenter, 'width':widthQuestionCenter, 'background-color' : backgroundColor}">
+    <div class="s-title">
+      {{currentQuestionName}}
+    </div>
+    <div class="s-content" id="s-content" [ngStyle]="{'height': heightQuestionCenterContent}">
+      <div dnd-droppable (onDropSuccess)="addComponent($event)" [ngClass]="{'active':mouving==true}"
+      [ngStyle]="{'height': heightQuestionCenterContent, 'background-size': step+'px '+ step+'px'}" class="overlaydrop">
+      </div>            
+      <div [ngStyle]="{'height': heightQuestionCenterContent}">
+        <div *ngIf="currentSlideName!=''" class='atlasslidename'>{{currentSlideName}}</div>
+        <div *ngFor="let c of components[currentSlideId]; let i = index">
+          <div class="c-item" 
+            [ngSwitch]="c.componentType" [ngStyle]="{'top': c.posY + 'px', 'left': c.posX + 'px', 'position' : 'absolute'}"
+           >
+            <i class="material-icons" [ngClass]="{'dragging' : draggingId == c.id}" (onDragStart)="ondragstart(c.id)" [dragEnabled]="true" dnd-draggable [dragData]="{'index': i, 'type': c.componentType, 'updated': true}"
+            >&#xE89F;</i>
+            <i class="material-icons" 
+            (click)="configComponentModal(c)">&#xE8B8;</i>
+            <i class="material-icons erase-button" (click)="removeComponent(i)">&#xE5CD;</i>
+            <br/>
+            <label *ngIf="c.label && c.componentType!='CHECKBOX'">{{c.label}}</label>
+            <input id="{{c.id}}" *ngSwitchCase="'TEXT'" [attr.maxlength]="c.chars" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}" type="text" name="{{c.name}}">
+
+            <textarea id="{{c.id}}" *ngSwitchCase="'TEXTAREA'"  [attr.cols]="c.cols" [attr.rows]="c.rows" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}" type="text" name="{{c.name}}"></textarea>
+
+            <div id="{{c.id}}" *ngSwitchCase="'RADIO'">
+              <div *ngFor="let r of c.radioComponent; let y = index" >
+                <input class="class-radio" id="{{c.id}}_{{y}}" style="width: 30px;" type="radio" name="{{c.groupName}}"> <label for="{{c.id}}__{{y}}">{{r.label}}</label><br>
+              </div>
+            </div>
+            <div *ngSwitchCase="'CHECKBOX'" >
+              <input id="{{c.id}}" style="height: 15px !important; width: 15px !important;" type="checkbox"
+                name="{{c.groupName}}">
+              <label for="{{c.id}}">{{c.label}}</label>
+            </div>
+            <div *ngSwitchCase="'RANGE'" class='rangecontainer' id="{{c.id}}" >
+            <input  style="height: 50px;" name="{{c.name}}"  
+            type="range" min='{{c.min}}' max='{{c.max}}' step='{{c.step}}' list='tickmarks'/>
+            <ul class='rangelabel' *ngIf="c.options.showlabels==true || c.options.showlabels=='true'">
+                <li *ngFor="let v of getLabels(c)">{{v.label}}</li>
+              </ul>
+            <datalist id="tickmarks" *ngIf="c.options.showticks==true || c.options.showticks=='true'">
+                <option *ngFor="let v of getTicks(c)" value="{{v.value}}">
+            </datalist>
+          </div>
+            <div *ngSwitchCase="'IMAGE'" class="e-image">
+              <img [urlApi]="c.url" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}" id="{{c.id}}" />
+            </div>
+            <div *ngSwitchCase="'VIDEO'" class="e-image">
+                <img [urlApi]="c.url" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}" id="{{c.id}}" />
+              </div>
+            <div *ngSwitchCase="'CLICK_AREA'" class="e-clickarea">
+              <div id="{{c.id}}"  [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}"></div>
+            </div>
+            <div *ngSwitchCase="'TEXTBLOCK'"class="e-textblock" >
+                <div id="{{c.id}}" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}" >
+                  <div [froalaView]="c.text"></div>
+                </div>
+              </div>
+            <button *ngSwitchCase="'BUTTON'" class="btn btn-{{c.options.bstyle}}"
+             [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">{{c.text}}</button>
+
+             <div id="{{c.id}}" *ngSwitchCase="'CHECKABLETABLE'">
+
+                <div *ngIf="c.tableComponent" style="background-color:white">
+                  <table class="table table-bordered" style="box-shadow: 10px 10px 5px #dedede;">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th *ngFor="let col of c.tableComponent[1];">{{col.label}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let row of c.tableComponent[0]; let i = index">
+                        <td>{{row.label}}</td>
+                        <td *ngFor="let col of c.tableComponent[1]; let j = index">
+                          <md-checkbox [checked]="isInCheckedString(c,i,j)" (change)=updateCheckedString(c,i,j)></md-checkbox>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+
+            <div *ngSwitchCase="'UPLOADS'" class="e-uploadsarea">
+
+                <div id="{{c.id}}" fxLayoutAlign="center center" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">
+
+                  <img src="assets/img/upload.png" alt="upload" style="height: 30%; width:auto" />
+
+                </div>
+
+              </div>
+
+          </div> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="s-right" [ngStyle]="{'min-height': hieghtQuestion}">
+    <md-tab-group (selectChange)="changeTab($event.index)">
+      <md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE413;</i>
+        </ng-template>
+        <div *ngIf="allMedias['PHOTO']" class="m-body" [ngStyle]="{'height': heightContentTab}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div  class="image-body" *ngFor="let m of allMedias['PHOTO']; let i = index">
+            <img [urlApi]="m.mediaThumbPath" width="100%" height="100%" dnd-draggable 
+            [dragData]="{'type': 'IMAGE', 'updated': false, url: m.mediaThumbPath, mediaId: m.mediaId}" 
+            (onDragStart)="ondragstart(null)" />
+          </div>
+        </div>
+      </md-tab>
+      <md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE04A;</i>
+        </ng-template>
+        <div *ngIf="allMedias['VIDEO']" class="m-body" [ngStyle]="{'height': heightContentTab}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div  class="image-body" *ngFor="let m of allMedias['VIDEO']; let i = index">
+            <img [urlApi]="m.mediaThumbPath" width="100%" height="100%" dnd-draggable 
+            [dragData]="{'type': 'VIDEO', 'updated': false, url: m.mediaThumbPath, mediaId: m.mediaId}" 
+            (onDragStart)="ondragstart(null)" />
+          </div>
+        </div>
+      </md-tab>
+      <!--<md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE030;</i>
+        </ng-template>
+        <div *ngIf="allMedias['AUDIO']" class="m-body" [ngStyle]="{'height': heightContentTab}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div class="image-body" *ngFor="let m of allMedias['AUDIO']; let i = index">
+            <img [urlApi]="m.mediaThumbPath" width="100%" height="100%" />
+          </div>
+        </div>
+      </md-tab>-->
+      <md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE02F;</i>
+        </ng-template>
+        <div *ngIf="allMedias['TEXT']" class="m-body" [ngStyle]="{'height': heightContentTab}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div class="image-body" *ngFor="let m of allMedias['TEXT']; let i = index">
+            <img [urlApi]="m.mediaThumbPath" width="100%" height="100%" />
+          </div>
+        </div>
+      </md-tab>
+    </md-tab-group>
+  </div>
+</div>
+<div class="slide-foo">
+  <div class="f-left">
+    <div class="new-question" style="cursor: pointer;" (click)="backQuestion()">
+      <img src="assets/img/new-question-icon.PNG" alt="question" width="40px" height="10px"> SECTION
+    </div>
+  </div>
+  <div class="f-center" dnd-sortable-container [sortableData]="question.slides">
+    <div *ngFor="let s of question.slides; let i = index" (click)="changeSlide(s.slideId)">
+      <div class="question-info"  [ngClass]="{'selected': s.slideId == currentSlideId}" (dragend)="saveQuestionOrder()" dnd-sortable [sortableIndex]="i">
+        <i class="material-icons" (click)="deleteSlide(s);">&#xE872;</i>
+        <i class="material-icons" (click)="configSlideModal(s)">&#xE8B8;</i>        
+        <br/> {{s.type}}
+      </div>
+      <div class="sperator-right">
+        <i class="material-icons">&#xE037;</i>
+      </div>
+    </div>
+
+    <div class="question-info" style="background-color: #1e4d59;" >
+        <i *ngIf="!questionLoading" (click)="addSlide()" class="material-icons">&#xE147;</i>
+        <i *ngIf="!questionLoading" (click)="importSlide()" class="material-icons">&#xE8D7;</i>
+      <i *ngIf="questionLoading" class="question-icon fa fa-circle-o-notch fa-spin"></i>
+      <br/> New Silde
+    </div>
+
+  </div>
+  <div class="f-right">
+      <button class="new-question" (click)="undoComponents()" [disabled]='!shouldUndo()'>
+          <i class="material-icons">&#xE166;</i> <br/> Undo
+      </button>
+    <div class="new-question" (click)="saveQuestion()">
+      <i class="material-icons">&#xE161;</i> <br/> Save
+    </div>
+  </div>
+</div>

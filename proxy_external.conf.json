@@ -1,0 +1,11 @@
+{
+  "/api/rest": {
+    "target": "https://testing02.eclettica.net",
+    "pathRewrite": {
+      "^/api/rest": "/api/rest"
+    },
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

@@ -1,0 +1,51 @@
+@import "../../share/theme.scss";
+.m-body {
+    margin-top: 5px;
+}
+.m-action {
+    padding: 10px 30px 0 30px;
+}
+
+.m-btn-filter {
+    background-color: #00ade5;
+    min-width: 0px;
+    color: white;
+    line-height: 30px;
+    padding: 0 5px 0 5px;
+    margin-left: 20px;
+  }
+  
+  .m-icon-filter {
+    font-size: 18px;
+  }
+
+  #tbAdmin > thead {
+    border-bottom: none;
+    background-color: #00ade5;
+    color: $color-white;
+  }
+
+  #tbAdmin > thead > tr > th {
+      border-bottom: none;
+  }
+
+  #tbAdmin > tbody > tr:nth-of-type(odd) {
+    background-color: #f1f1f1;
+  }
+
+  #tbAdmin > tbody > tr > td {
+      border-top: none;
+  }
+
+.e-footer {
+  text-align: center;
+  padding: 20px;
+}
+
+.a-table-hover  > tbody > tr:hover {
+  background-color: #caeffa !important;
+}
+
+.tr-active {
+  background-color: #caeffa !important;
+}

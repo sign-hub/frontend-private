@@ -1,0 +1,47 @@
+<div class="u-container">
+    <form #nForm="ngForm">
+        <div class="u-title">
+          {{'admin.userInfo.title' | translate}}
+        </div>
+        <div class="u-body">
+            <md-input-container class="p-full-width">
+                <input mdInput required type="text" placeholder="Name" name="name" [(ngModel)]="user.name" #name="ngModel" id="name">
+                <md-error *ngIf="(name.errors && (name.dirty || name.touched))">
+                    {{'admin.validate.name' | translate}}
+                </md-error>
+            </md-input-container>
+            <md-input-container class="p-full-width">
+                <input mdInput required type="text" placeholder="Surname" name="surname" [(ngModel)]="user.surname" #surname="ngModel" id="surname">
+                <md-error *ngIf="(surname.errors && (surname.dirty || surname.touched))">
+                    {{'admin.validate.surname' | translate}}
+                </md-error>
+            </md-input-container>
+            <md-input-container class="p-full-width">
+                <input mdInput required type="text" placeholder="E-mail" name="email" [(ngModel)]="user.email" #email="ngModel" id="email">
+                <md-error *ngIf="(email.errors && (email.dirty || email.touched))">
+                    {{'admin.validate.email' | translate}}
+                </md-error>
+            </md-input-container>
+            <md-input-container *ngIf="!user.userId" class="p-full-width">
+                <input mdInput required type="password" placeholder="Password" name="password" [(ngModel)]="user.password" #password="ngModel" id="password">
+                <md-error *ngIf="(password.errors && (password.dirty || password.touched))">
+                    {{'admin.validate.password' | translate}}
+                </md-error>
+            </md-input-container>
+
+            <md-select placeholder="Role" required class="p-full-width" style="margin-top: 10px;" name="role" [(ngModel)]="user.role" #role="ngModel"
+                id="role" >
+                <md-option *ngFor="let r of roles" [value]="r.key">
+                    {{ r.value }}
+                </md-option>
+                <md-error *ngIf="(role.errors && (role.dirty || role.touched))">
+                    {{'admin.validate.role' | translate}}
+                </md-error>
+            </md-select>
+        </div>
+        <div class="u-footer">
+            <button md-button color="primary" [disabled]="loading || (!nForm.form.valid)" (click)="save()"><i *ngIf="loading" class="fa fa-circle-o-notch fa-spin"></i> <i *ngIf="!loading" class="material-icons">&#xE161;</i> {{'common.save' | translate}}</button>
+            <button md-button color="primary" [md-dialog-close]="true"><i class="material-icons">&#xE5CD;</i> {{'common.cancel' | translate}}</button>
+        </div>
+    </form>
+</div>

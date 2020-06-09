@@ -1,0 +1,53 @@
+<div class="main-container" [ngStyle]="{'min-height': wHeight}">
+  <div class="e-card">
+    <md-card>
+      <div class="card-title">
+        <span style="margin-right:50px;">Report list</span>
+        <md-input-container>
+          <input mdInput placeholder="Test name" name="filter_name" [(ngModel)]="filter_name" #name="ngModel" id="filter_name">
+        </md-input-container>
+        <button md-button class="m-btn-filter" (click)="doFilter()"><i class="material-icons m-icon-filter">&#xE152;</i></button>
+        <div style="display: inline; /* width: 48%; */ margin-top: 20px; position: absolute; margin-left: 40px;">
+          <my-date-picker style="width: 50% !important" name="mydate" [options]="myDatePickerOptions" [(ngModel)]="fileter_date"
+            (dateChanged)="doFilter($event)"></my-date-picker>
+        </div>
+      </div>
+      <md-card-content>
+        <div class="e-content">
+          <div style="width: 100%;" *ngIf="loading">
+            <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+          </div>
+          <table class="table table-striped a-table-hover" id="tbAdmin">
+            <thead>
+              <tr>
+                <th>{{'report.table.testname' | translate}}</th>
+                <th>{{'report.table.id' | translate}}</th>
+                <th>{{'report.table.date' | translate}}</th>
+                <th>{{'report.table.edit' | translate}}</th>
+                <th>{{'report.table.action' | translate}}</th>
+                <th>{{'report.table.media_download' | translate}}</th>
+                <!-- <th>{{'report.table.link' | translate}}</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="loading">
+                <td colspan="5">
+                  <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+                </td>
+              </tr>
+              <tr *ngFor="let e of reports; let i = index">
+                <td>{{e.reportTestName}}</td>
+                <td>{{e.reportMnemonicId}}</td>
+                <td>{{e.reportDate}}</td>
+                <td><button (click)="edit(e)">Edit</button></td>
+                <td><button (click)="downloadCsv(e)">Download</button></td>
+                <td><button (click)="showMedia(e)">Show</button></td>
+                <!-- <td><button (click)="copy(e)">Copy</button></td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

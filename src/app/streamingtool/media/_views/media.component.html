@@ -1,0 +1,140 @@
+<div class="main-container" [ngStyle]="{'min-height': wHeight}">
+  <div class="e-card">
+    <md-card>
+      <div class="card-title">
+        Video search
+      </div>
+      <md-card-content>
+          <div *ngIf="loading$ | async">
+              <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+            </div>
+        <div class="e-content" [ngStyle]="{'height' : heightMedia}">
+          <div class="m-action" style="margin-top: 15px;">
+            <md-grid-list cols="3" rowHeight="40px">
+              <md-grid-tile [colspan]="2" [rowspan]="1">
+                <md-input-container>
+                  <input mdInput placeholder="Start typing to perform search ..." [(ngModel)]="input" (keydown.enter)="search()" >
+                  <span class="search-icons"><i class="material-icons" (click)="clear()">clear</i></span>
+                  <span class="search-icons"><i class="material-icons" (click)="search()">search</i></span>
+                </md-input-container>
+              </md-grid-tile>
+              <md-grid-tile [colspan]="1" [rowspan]="1">
+                <a href="javascript:void(0)" class="view" (click)="setGridView()"><i class="material-icons">apps</i> <span>Grid View</span></a>
+                <a href="javascript:void(0)" class="view" (click)="setListView()"><i class="material-icons">list</i> <span>List View</span></a>
+              </md-grid-tile>
+              <md-grid-tile [colspan]="2" [rowspan]="1" flex-left>
+                <div *ngIf="searchQuery$ | async" id="results">
+                  {{(videos$ | async).length}} 
+                  results for <b>{{searchQuery$ | async}}</b> </div>
+              </md-grid-tile>
+              <md-grid-tile [colspan]="1" [rowspan]="1">
+                  <button md-button class="m-btn-filter"><i class="material-icons m-icon-filter" (click)="orderBy()" >&#xE152;</i></button>
+                  <select placeholder="Sort By" class="select-custom" (change)="order($event.target.value)">
+                    <option value="id" (click)="sortBy('id')">
+                      Id
+                    </option>
+                    <option value="name" (click)="sortBy('name')">
+                      Name
+                    </option>
+                  </select>
+              </md-grid-tile>
+            </md-grid-list>
+          </div>
+          <div class="m-body">
+            <div>
+              <div class="col-md-3" style="padding: 0px;" *ngFor="let p of videos$ | async; let i = index">
+                <div class="m-image" *ngIf="gridView">
+                  <span class="top-right">
+                        <a href="" mdTooltip="Download" mdTooltipPosition="above">
+                          <i class="material-icons single-mini">
+                              cloud_download
+                              </i>
+                        </a>
+                              <a href="" mdTooltip="SRT" mdTooltipPosition="above">
+                          <i class="material-icons single-mini">
+                              movie
+                              </i>
+                              </a>
+                              <a href="" mdTooltip="PDF" mdTooltipPosition="above">
+                                <i class="material-icons single-mini">
+                                  picture_as_pdf
+                                  </i>
+                              </a>
+                  </span>
+                 <a routerLink="/home/streaming_tool/viewvideo/{{p.id}}" > <img [src]="p.thumb" alt="{{p.thumb}}" width="100%" />
+                  <div class="m-image-footer">
+                    <div class="m-text">
+                      <div class="m-file-name">
+                        {{p.name}}
+                      </div>
+                      <div class="m-size">
+                        <!-- {{p.duration}} - {{p.size}} - {{p.format}} -->
+                      </div>
+                    </div>
+                  </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <md-list *ngIf="listView" class="streaming-tool-list">
+                <md-list-item  *ngFor="let p of videos$ | async; let i = index" style="height: 295px;"> 
+                  <div class="pull-left" class="list-left"> 
+                      <a routerLink="/home/streaming_tool/viewvideo/{{p.id}}"><img [src]="p.thumb" alt="{{p.thumb}}" width="100%" height="250px" /></a>
+                  </div>
+                  <div class="pull-right" class="list-right" *ngIf="!!p">
+                    <h2> <a routerLink="viewvideo/{{p.id}}">{{p.name}}</a></h2>
+                    <div class="description">
+                      <!-- duration: {{p.duration}} <br> -->
+                      <!-- size: {{p.size}} <br> -->
+                      <!-- format: {{p.format}} <br> -->
+                      <!-- date: {{p.date}} <br> -->
+                      <span *ngFor="let info of p.info">
+                        <!-- info: {{info}} <br> -->
+                      </span>
+                      <span  [ngStyle]="{'display': 'flex', 'justify-content': 'center', 'color':'#00ade5', 'margin-bottom': '5px'}"><i [ngStyle]="{'line-height': 0.9}" class="material-icons">
+                          cloud_download
+                          </i>&nbsp;Downloads</span>
+                      <span class="multi">
+                          <span class="single">
+                              <i class="material-icons">
+                                  movie
+                                  </i>
+                                  EAF file
+                          </span>
+                          <span class="single">
+                              <i class="material-icons">
+                                  videocam
+                                  </i>
+                                  SRT file
+                          </span>
+                          <span class="single">
+                              <i class="material-icons">
+                                  format_align_left
+                                  </i>
+                                  Text file
+                          </span>
+                          <span class="single">
+                              <i class="material-icons">
+                                  picture_as_pdf
+                                  </i>
+                                  PDF file
+                          </span>
+                          <span class="single">
+                              <i class="material-icons">
+                                  library_books
+                                  </i>
+                                  Epub file
+                          </span>
+                        </span>
+                    </div>
+                    <hr [ngStyle]="{'margin': '5px 0'}">
+                      {{p.description}} 
+                  </div>
+                </md-list-item>
+              </md-list>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

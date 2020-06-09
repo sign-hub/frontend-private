@@ -1,0 +1,333 @@
+<div class="main-container grammar_test">
+  <div class="s-left">
+    <div class='toc-container' id='toc-container' [ngStyle]="{'height': heightTestEdit }">
+      <div class='row'>
+        <div class='toctitle'>
+          Table of contents:
+        </div>
+      </div>
+      <div *ngFor="let c of grammar.parts; let i = index" class='firstlevel row'>
+        <div *ngIf="c.name && c.type=='ARTICLE'" class='toc-element level-1 article col-sm-11 col-sm-offset-2'
+          [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == c.uuid }">
+          <div *ngIf="!canEdit(c)">
+            <a href="javascript:void(0)"> {{c.name}} </a>
+            <i class="material-icons lock">lock_outline</i>
+          </div>
+          <div *ngIf="canEdit(c)">
+            <a href='javascript:void(0)' (click)="editGrammarPart(c)">{{c.name}}</a>
+            <i class="material-icons lock">lock_open</i>
+          </div>
+        </div>
+        <div *ngIf="c.name && c.type=='PART'" class='toc-element level-1 col-sm-11 col-sm-offset-1'
+          [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == c.uuid }">
+          <span *ngIf="hasChild(c)" (click)="rotate($event)" id="{{c.uuid}}" class="material-icons arrow_right"
+            style="cursor: pointer;">keyboard_arrow_right</span>
+          <div *ngIf="!canEdit(c)">
+            <a href="javascript:void(0)"> {{c.name}} </a>
+            <i class="material-icons lock">lock_outline</i>
+          </div>
+          <div *ngIf="canEdit(c)">
+            <a href='javascript:void(0)' (click)="editGrammarPart(c)">{{c.name}}</a>
+            <i class="material-icons lock">lock_open</i>
+          </div>
+        </div>
+        <div id="secondlevel" *ngFor="let cc of c.parts; let ii = index" class='secondlevel row foglia'>
+          <div *ngIf="cc.name" class='toc-element level-2 col-sm-10 col-sm-offset-2'
+            [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == cc.uuid }">
+            <span *ngIf="hasChild(cc)" (click)="rotate($event)" id="{{cc.uuid}}" class="material-icons arrow_right"
+              style="cursor: pointer;">keyboard_arrow_right</span>
+            <div *ngIf="!canEdit(cc)">
+              <a href="javascript:void(0)"> {{cc.name}}</a>
+              <i class="material-icons lock">lock_outline</i>
+            </div>
+            <div *ngIf="canEdit(cc)">
+              <a href='javascript:void(0)' (click)="editGrammarPart(cc)">{{cc.name}}</a>
+              <i class="material-icons lock">lock_open</i>
+            </div>
+          </div>
+          <div id="thirdlevel" *ngFor="let ccc of cc.parts; let iii = index" class='thirdlevel row foglia'>
+            <div *ngIf="ccc && ccc.name" class='toc-element level-3 col-sm-9 col-sm-offset-3'
+              [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == ccc.uuid }">
+              <span *ngIf="hasChild(ccc)" (click)="rotate($event)" id="{{ccc.uuid}}" class="material-icons arrow_right"
+                style="cursor: pointer;">keyboard_arrow_right</span>
+              <div *ngIf="!canEdit(ccc)">
+                <a href="javascript:void(0)"> {{ccc.name}} </a>
+                <i class="material-icons lock">lock_outline</i>
+              </div>
+              <div *ngIf="canEdit(ccc)">
+                <a href='javascript:void(0)' (click)="editGrammarPart(ccc)">{{ccc.name}}</a>
+                <i class="material-icons lock">lock_open</i>
+              </div>
+            </div>
+            <div id="fourthlevel" *ngFor="let cccc of ccc.parts; let iii = index" class='forthlevel row foglia'>
+              <div *ngIf="cccc && cccc.name" class='toc-element level-4 col-sm-8 col-sm-offset-4'
+                [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == cccc.uuid }">
+                <span *ngIf="hasChild(cccc)" (click)="rotate($event)" id="{{cccc.uuid}}"
+                  class="material-icons arrow_right" style="cursor: pointer;">keyboard_arrow_right</span>
+                <div *ngIf="!canEdit(cccc)">
+                  <a href="javascript:void(0)">{{cccc.name}}</a>
+                  <i class="material-icons lock">lock_outline</i>
+                </div>
+                <div *ngIf="canEdit(cccc)">
+                  <a href='javascript:void(0)' (click)="editGrammarPart(cccc)">{{cccc.name}}</a>
+                  <i class="material-icons lock">lock_open</i>
+                </div>
+              </div>
+              <div id="fifthlevel" *ngFor="let ccccc of cccc.parts; let iii = index" class='sixthlevel row foglia'>
+                <div *ngIf="ccccc && ccccc.name" class='toc-element level-5 col-sm-7 col-sm-offset-5'
+                  [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == ccccc.uuid }">
+                  <span *ngIf="hasChild(ccccc)" (click)="rotate($event)" id="{{ccccc.uuid}}"
+                    class="material-icons arrow_right" style="cursor: pointer;">keyboard_arrow_right</span>
+                  <div *ngIf="!canEdit(ccccc)">
+                    <a href="javascript:void(0)">{{ccccc.name}}</a>
+                    <i class="material-icons lock">lock_outline</i>
+                  </div>
+                  <div *ngIf="canEdit(ccccc)">
+                    <a href='javascript:void(0)' (click)="editGrammarPart(ccccc)">{{ccccc.name}}</a>
+                    <i class="material-icons lock">lock_open</i>
+                  </div>
+                </div>
+                <div id="sixthlevel" *ngFor="let cccccc of ccccc.parts; let iii = index"
+                  class='seventhlevel row foglia'>
+                  <div *ngIf="cccccc && cccccc.name" class='toc-element level-6 col-sm-6 col-sm-offset-6'
+                    [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == cccccc.uuid }">
+                    <span *ngIf="hasChild(cccccc)" (click)="rotate($event)" id="{{cccccc.uuid}}"
+                      class="material-icons arrow_right" style="cursor: pointer;">keyboard_arrow_right</span>
+                    <div *ngIf="!canEdit(cccccc)">
+                      <a href="javascript:void(0)">{{ccccc.name}}</a>
+                      <i class="material-icons lock">lock_outline</i>
+                    </div>
+                    <div *ngIf="canEdit(cccccc)">
+                      <a href='javascript:void(0)' (click)="editGrammarPart(cccccc)">{{cccccc.name}}</a>
+                      <i class="material-icons lock">lock_open</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="s-center">
+    <div class="s-title">
+      <div>
+        {{grammarTitle}}
+        <div *ngIf="user.role === 'ADMIN' || user.role === 'GR_ADMIN' " class="pull-right">
+          <a href="javascript:void(0)" (click)="editSettings()"><i class="material-icons">&#xE8B8;</i></a>
+        </div>
+        <div *ngIf="user.role === 'ADMIN' || user.role === 'GR_ADMIN' " class="pull-right">
+          <a href="javascript:void(0)" (click)="showGrammarConfig()"><i class="material-icons">build</i></a>
+        </div>
+      </div>
+    </div>
+    <div class="s-content" id="s-content">
+      <div class="p-full-width" *ngIf="!!grammarPart">
+        <!-- <textarea [froalaEditor]='froalaoptions' mdInput placeholder="Text" name="text" [(froalaModel)]="html" id="text"> </textarea> -->
+        <simplejodit class="editor" #editor [elementId]="'editor'" [(ngModel)]="html"
+          (change)="editorUpdate($event.target.value)" spellcheck="false"></simplejodit>
+      </div>
+      <div *ngIf="!grammarPart && (user.role === 'ADMIN' || user.role === 'GR_ADMIN') && !!grammar"
+        style="margin-top:80px; overflow-y:scroll" [ngStyle]="{'height': height-80+'px' }">
+        <md-input-container class="p-full-width">
+          <md-placeholder>Grammar Name</md-placeholder>
+          <input style="text-align: center;" mdInput [(ngModel)]="grammarTitle">
+        </md-input-container>
+        <div style='display:flex'>
+          <md-input-container class="p-middle-width">
+            <md-placeholder>Sigh-Hub Grammar Series</md-placeholder>
+            <input style="text-align: center;" mdInput [(ngModel)]="grammar.grammarSignHubSeries">
+          </md-input-container>
+          <md-input-container class="p-middle-width">
+            <md-placeholder>Sigh-Hub Grammar Series Number</md-placeholder>
+            <input type='number' style="text-align: center;" mdInput [(ngModel)]="grammar.grammarSignHubSeriesNumber">
+          </md-input-container>
+        </div>
+        <md-input-container class="p-middle-width">
+          <md-placeholder>List of Sign-Hub Series grammars already published</md-placeholder>
+          <textarea [attr.rows]="4" style="text-align: center;" mdInput
+            [(ngModel)]="grammar.grammarOtherSignHubSeries"></textarea>
+        </md-input-container>
+        <md-input-container class="p-middle-width">
+          <md-placeholder>Editorial info</md-placeholder>
+          <textarea [attr.rows]="4" style="text-align: center;" mdInput
+            [(ngModel)]="grammar.grammarEditorialInfo"></textarea>
+        </md-input-container>
+        <md-input-container class="p-middle-width">
+          <md-placeholder>Copyright info</md-placeholder>
+          <textarea [attr.rows]="4" style="text-align: center;" mdInput
+            [(ngModel)]="grammar.grammarCopyrightInfo"></textarea>
+        </md-input-container>
+        <md-input-container class="p-full-width">
+          <md-placeholder>ISBN Info</md-placeholder>
+          <input style="text-align: center;" mdInput [(ngModel)]="grammar.grammarISBNInfo">
+        </md-input-container>
+        <md-input-container class="p-middle-width">
+          <md-placeholder>Bibliographical reference for citation</md-placeholder>
+          <textarea [attr.rows]="4" style="text-align: center;" mdInput
+            [(ngModel)]="grammar.grammarBibliographicalReference"></textarea>
+        </md-input-container>
+        <br>
+        <button (click)="updateGrammarName()" md-raised-button color="primary">Save</button>
+        <br>
+        <br>
+        <label>Grammar Status</label><br>
+        Draft <md-slide-toggle [checked]='grammar.status != "DRAFT"' (change)="changeStatus($event,'grammar')">Publish
+        </md-slide-toggle>
+      </div>
+      <div *ngIf="!!grammarPart && !!grammarPart.editors && grammarPart.editors.indexOf(user.userId) != -1">
+        <label>GrammarPart Status</label><br>
+        Draft <md-slide-toggle [checked]='grammarPart.status != "DRAFT"' (change)="changeStatus($event,'grammarPart')">
+          Publish</md-slide-toggle>
+      </div>
+    </div>
+  </div>
+
+  <div class="s-right" [ngStyle]="{'min-height': hieghtQuestion}">
+    <md-tab-group (selectChange)="changeTab($event.index)">
+      <md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE413;</i>
+        </ng-template>
+        <button md-button *ngIf="!isUrlRoot()" (click)="goBack()" class="btn-add-photo"><i
+            class="material-icons">arrow_back</i>
+          <span>Back</span></button>
+        <div *ngIf="allMedias['PHOTO']" class="m-body" [ngStyle]="{'height': hieghtQuestion}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div *ngIf="gridView">
+            <div class="image-body" *ngFor="let m of allMedias['PHOTO']; let i = index">
+              <img class="unDraggable" [urlApi]="m.mediaThumbPath" width="100%"
+                (click)="insertImg(m.mediaPath,$event, m.mediaId)" />
+              <div *ngIf="m.mediaType === 'FOLDER'" class="m-image">
+                <button md-button (click)="openFolder(m)" class="btn-folder"><i
+                    class="material-icons icon-folder">folder</i>
+                  <span class="text-folder">{{m.mediaName}}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <md-list *ngIf="listView">
+            <md-list-item *ngFor="let m of allMedias['PHOTO']; let i = index">
+              <div class="pull-left" class="list-left">
+                <img [urlApi]="m.mediaThumbPath" width="100%" (click)="insertImg(m.mediaPath,$event, m.mediaId)" />
+              </div>
+              <div class="m-icon list-right">
+                {{ m.mediaName}}
+              </div>
+            </md-list-item>
+          </md-list>
+          <button *ngIf="mediaPhotoPageIndex > 0 && loadMorePhoto" md-button (click)="loadMedia('PHOTO')"
+            class="btn-load-more">
+            <span>Load More</span></button>
+        </div>
+      </md-tab>
+      <md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE04A;</i>
+        </ng-template>
+        <button md-button *ngIf="!isUrlRoot()" (click)="goBack()" class="btn-add-photo"><i
+            class="material-icons">arrow_back</i>
+          <span>Back</span></button>
+        <div *ngIf="allMedias['VIDEO']" class="m-body" [ngStyle]="{'height': hieghtQuestion}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div *ngIf="gridView">
+            <div class="image-body" *ngFor="let m of allMedias['VIDEO']; let i = index">
+              <img class="unDraggable" [urlApi]="m.mediaThumbPath" width="100%"
+                (click)="insertVid(m.publicUrl,$event)" />
+              <div *ngIf="m.mediaType === 'FOLDER'" class="m-image">
+                <button md-button (click)="openFolder(m)" class="btn-folder"><i
+                    class="material-icons icon-folder">folder</i>
+                  <span class="text-folder">{{m.mediaName}}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <md-list *ngIf="listView">
+            <md-list-item *ngFor="let m of allMedias['VIDEO']; let i = index">
+              <div class="pull-left" class="list-left">
+                <img class="unDraggable" [urlApi]="m.mediaThumbPath" width="100%"
+                  (click)="insertVid(m.publicUrl,$event)" />
+              </div>
+              <div class="m-icon list-right">
+                {{ m.mediaName}}
+              </div>
+            </md-list-item>
+          </md-list>
+          <button *ngIf="mediaVideoPageIndex > 0 && loadMoreVideo" md-button (click)="loadMedia('VIDEO')"
+            class="btn-load-more">
+            <span>Load More</span></button>
+        </div>
+      </md-tab>
+      <md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE030;</i>
+        </ng-template>
+        <div *ngIf="allMedias['AUDIO']" class="m-body" [ngStyle]="{'height': hieghtQuestion}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div *ngIf="gridView">
+            <div class="image-body" *ngFor="let m of allMedias['AUDIO']; let i = index">
+              <img class="unDraggable" [urlApi]="m.mediaThumbPath" width="100%" />
+              <div *ngIf="m.mediaType === 'FOLDER'" class="m-image">
+                <button md-button (click)="openFolder(m)" class="btn-folder"><i
+                    class="material-icons icon-folder">folder</i>
+                  <span class="text-folder">{{m.mediaName}}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <md-list *ngIf="listView">
+            <md-list-item *ngFor="let m of allMedias['AUDIO']; let i = index">
+              <div class="pull-left" class="list-left">
+                <img class="unDraggable" [urlApi]="m.mediaThumbPath" width="100%" />
+              </div>
+              <div class="m-icon list-right">
+                {{ m.mediaName}}
+              </div>
+            </md-list-item>
+          </md-list>
+          <button *ngIf="mediaAudioPageIndex > 0 && loadMoreAudio" md-button (click)="loadMedia('AUDIO')"
+            class="btn-load-more">
+            <span>Load More</span></button>
+        </div>
+      </md-tab>
+      <md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE02F;</i>
+        </ng-template>
+        <div *ngIf="allMedias['ELAN']" class="m-body" [ngStyle]="{'height': hieghtQuestion}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div *ngIf="gridView">
+            <div class="image-body" *ngFor="let m of allMedias['ELAN']; let i = index">
+              <img class="unDraggable" [urlApi]="m.mediaThumbPath" width="100%" id="file-img"
+                (click)="insertFile(m,$event)" />
+              <div *ngIf="m.mediaType === 'FOLDER'" class="m-image">
+                <button md-button (click)="openFolder(m)" class="btn-folder"><i
+                    class="material-icons icon-folder">folder</i>
+                  <span class="text-folder">{{m.mediaName}}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <md-list *ngIf="listView">
+            <md-list-item *ngFor="let m of allMedias['ELAN']; let i = index">
+              <div class="pull-left" class="list-left">
+                <img class="unDraggable" [urlApi]="m.mediaThumbPath" width="100%" />
+              </div>
+              <div class="m-icon list-right">
+                {{ m.mediaName}}
+              </div>
+            </md-list-item>
+          </md-list>
+          <button *ngIf="mediaElanPageIndex > 0 && loadMoreElan" md-button (click)="loadMedia('ELAN')"
+            class="btn-load-more">
+            <span>Load More</span></button>
+        </div>
+      </md-tab>
+    </md-tab-group>
+    <div style="position:absolute;right:12px;top:50px;z-index: 999999;">
+      <a href="javascript:void(0)"><i class="material-icons" (click)="setListView()">list</i></a>
+      <a href="javascript:void(0)"><i class="material-icons" (click)="setGridView()">apps</i></a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="main-container" [ngStyle]="{'min-height': wHeight}">
+  <div class="e-card">
+    <md-card>
+      <div class="card-title">
+        <h2 style="text-align: center;" *ngIf="downloaded">Report Downloaded Successfully</h2>
+        <h2 style="text-align: center" *ngIf="!downloaded">Download Report</h2>
+      </div>
+      <md-card-content>
+        <div class="e-content">
+          <div style="width: 100%;" *ngIf="loading">
+            <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+          </div>
+          <div id="btn-container">
+            <button md-button (click)="downloadCsv()" class="btn-download"><i class="material-icons">&#xe149;</i>
+              Download</button>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

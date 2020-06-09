@@ -1,0 +1,45 @@
+@import "../../../share/theme.scss";
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btnUpload {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  line-height: 0.428571;
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.nv-file-over {
+  border: dotted 3px red;
+}
+
+
+.d-uploads-dialog-title {
+  padding: 2px 5px 2px 5px;
+  background-color: $bg-card-title;
+  font-weight: bold;
+  color: $color-card-title;
+  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+}
+
+.d-uploads-dialog-footer {
+  margin-top: 20px;
+  text-align: center;
+  padding: 10px;
+}

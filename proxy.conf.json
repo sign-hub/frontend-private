@@ -1,0 +1,11 @@
+{
+  "/api/rest": {
+    "target": "http://10.6.0.162:9000",
+    "pathRewrite": {
+      "^/api/rest": ""
+    },
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

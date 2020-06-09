@@ -1,0 +1,72 @@
+<div class="main-container" [ngStyle]="{'min-height': wHeight}">
+  <div class="e-card">
+    <md-card>
+      <div class="card-title">
+        {{'admin.title' | translate}}
+      </div>
+      <md-card-content>
+        <div class="e-content">
+          <div class="m-action">
+            <md-input-container>
+              <input mdInput placeholder="{{'admin.filter.name' | translate}}" name="name" [(ngModel)]="search.name"
+                #name="ngModel" id="name">
+            </md-input-container>
+            <md-input-container>
+              <input mdInput placeholder="{{'admin.filter.email' | translate}}" name="email" [(ngModel)]="search.email"
+                #email="ngModel" id="email">
+            </md-input-container>
+            <md-select placeholder="{{'admin.filter.role' | translate}}" name="role" [(ngModel)]="search.role"
+              #role="ngModel" id="role">
+              <md-option *ngFor="let r of roles" [value]="r.key">
+                {{ r.value }}
+              </md-option>
+            </md-select>
+            <button md-button class="m-btn-filter" (click)="filterListUser()"><i
+                class="material-icons m-icon-filter">&#xE152;</i>
+            </button>
+          </div>
+          <div class="m-body">
+            <table class="table table-striped a-table-hover" id="tbAdmin">
+              <thead>
+                <tr>
+                  <th>{{'admin.table.name' | translate}}</th>
+                  <th>{{'admin.table.surname' | translate}}</th>
+                  <th>{{'admin.table.email' | translate}}</th>
+                  <th>{{'admin.table.profile' | translate}}</th>
+                  <th>{{'admin.table.status' | translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="isLoading">
+                  <td colspan="5">
+                    <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+                  </td>
+                </tr>
+                <tr *ngFor="let user of users; let i = index" [ngClass]="{'tr-active': userIndex === i}"
+                  (click)="chooseUser(i, user)">
+                  <td>{{user.name}}</td>
+                  <td>{{user.surname}}</td>
+                  <td>{{user.email}}</td>
+                  <td>{{user.role | role }}</td>
+                  <td>{{user.deleted | status}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+    <div class="e-footer">
+      <button md-button color="primary" (click)="openDialogUserInfo()"><i class="material-icons">&#xE7FE;</i>
+        {{'admin.action.add' | translate}}
+      </button>
+      <button md-button color="primary" [disabled]="isDeleted" (click)="openDialogUpdateEdit()"><i
+          class="material-icons">border_color</i> {{'admin.action.edit' | translate}}
+      </button>
+      <button md-button color="primary" [disabled]="isDeleted" (click)="openDialogDelUser()"><i
+          class="material-icons">&#xE872;</i>
+        {{'admin.action.delete' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

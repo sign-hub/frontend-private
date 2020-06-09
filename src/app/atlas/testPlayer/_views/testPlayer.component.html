@@ -1,0 +1,281 @@
+<div *ngIf="uploader" class="slide-head" [ngStyle]="{'height': heightQuestionCenterContent}">
+  <div class="s-left" [ngStyle]="{'height': heightQuestionCenterContent}">
+    <div class='toc-container' id='toc-container' [ngStyle]="{'height': heightQuestionCenterContent}">
+      <div class='row'>
+        <div class='toctitle'>
+          Table of contents:
+        </div>
+      </div>
+      <div *ngFor="let c of toc; let i = index" class='firstlevel row'
+        [ngClass]="{'active': currentQuestionId==c.flqid}">
+        <div *ngIf="c.name" class='toc-element level-1 col-sm-11 col-sm-offset-1'
+          [ngClass]="{'selected': currentQuestionId==c.qid}">
+          <a href='javascript:void(0)' (click)="gotoSection(c)">{{c.name}}</a>
+        </div>
+        <div *ngFor="let cc of c.childs; let ii = index" class='secondlevel row'>
+          <div *ngIf="cc.name" class='toc-element level-2 col-sm-10 col-sm-offset-2'
+            [ngClass]="{'selected': currentQuestionId==cc.qid}">
+            <a href='javascript:void(0)' (click)="gotoSection(cc)">{{cc.name}}
+            </a>
+          </div>
+          <div *ngFor="let ccc of cc.childs; let iii = index" class='thirdlevel row'>
+            <div *ngIf="ccc && ccc.name" class='toc-element level-3 col-sm-9 col-sm-offset-3'
+              [ngClass]="{'selected': currentQuestionId==ccc.qid}">
+              <a href='javascript:void(0)' (click)="gotoSection(ccc)">{{ccc.name}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- FINE TOC CONTAINER -->
+    <!--<ul id='toc-container'>
+          <li class="item-component" >
+              Input field
+          </li>
+          <li class="item-component" >
+              Input field
+          </li>
+          <li class="item-component" >
+              Input field
+              <ul>
+                  <li class="item-component" >
+                      Input field
+                  </li>
+              </ul>
+          </li>
+        </ul>-->
+  </div> <!-- FINE BLOCCO SINISTRA -->
+  <div class="s-center" [ngStyle]="{'height': heightQuestionCenter, 'width':widthQuestionCenter}">
+    <div class="s-title text-center">
+      <!-- <span class="pull-left" style="cursor:pointer;"><i class="material-icons">arrow_back</i></span> -->
+      <span class="text-center">{{currentQuestion.name}}</span>
+      <!--{{test.TestName}} - -->
+      <!--- {{currentSlide.type}} {{currentSlideName}} -->
+      <!--<span class="pull-right" (click)="closePlayer()" style="cursor:pointer;"><i
+          class="material-icons">close</i></span>-->
+    </div>
+
+    <div class="s-content" id="s-content"
+      [ngStyle]="{'height': heightQuestionCenterContent, 'background-color' : backgroundColor, 'position':'relative'}">
+      <div *ngIf="loading" class="testdownload-overlay">
+        <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+      </div>
+      <div [ngStyle]="{'height': heightQuestionCenterContent}">
+        <div *ngIf='currentSlideName!=""' class='s-title s-name'>{{currentSlideName}}</div>
+        <div *ngFor="let c of components[currentSlideId]; let i = index">
+          <div class="c-item" [ngClass]="{'is-click-area' : c.componentType == 'CLICK_AREA' }"
+            [ngSwitch]="c.componentType"
+            [ngStyle]="{'top': c.posY + 'px', 'left': c.posX + 'px', 'position' : 'absolute','margin-top':'20px'}">
+
+
+            <div id="{{c.id}}" [ngClass]="{'table-overflow' : !!c.options.scrollable}" *ngSwitchCase="'CHECKABLETABLE'"
+              [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">
+
+              <div *ngIf="c.tableComponent" style="background-color:white;height: inherit;">
+                <table [ngStyle]="{'transform':'scale('+c.scale+')'}" class="table table-bordered"
+                  style="box-shadow: 10px 10px 5px #dedede;height: inherit;">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th *ngFor="let col of c.tableComponent[1];">{{col.label}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of c.tableComponent[0]; let i = index">
+                      <td>{{row.label}}</td>
+                      <td *ngFor="let col of c.tableComponent[1]; let j = index">
+                        <!-- <mat-checkbox [checked]="isInCheckedString(c,i,j)" (change)=updateCheckedString(c,i,j)></mat-checkbox> -->
+                        <md-checkbox [disabled]="isCheckboxDisabled(c,i,j)" [checked]="isInCheckedString(c,i,j)"
+                          (change)="checkableTableChange(c,i,j); checkTransition(c, $event)"></md-checkbox>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div *ngSwitchCase="'UPLOADS'" class="e-uploadsarea">
+              <!-- <div id="{{c.id}}" (click)="checkTransition(c, $event)" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}"> -->
+              <div id="{{c.id}}" (click)="checkTransition(c, $event)"
+                [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}"
+                style="background-color:rgb(191, 255, 234);" (click)="openDialogUploads(c)">
+
+                <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="onFileOver(c)"
+                  class="well my-drop-zone" fxLayoutAlign="center center" style="min-height:100%; font-size:14px;">
+                  <span
+                    *ngIf="(c.fileNames == undefined || c.fileNames == null || c.fileNames.length == 0) && (c.groupName == 'Tutti' || !c.groupName || c.groupName == 'Undefined' || c.groupName.toLowerCase == 'undefined')">Upload
+                    Here</span>
+                  <span
+                    *ngIf="(c.fileNames == undefined || c.fileNames == null || c.fileNames.length == 0) && (c.groupName != 'Tutti' && !!c.groupName && c.groupName != 'Undefined')">{{ c.groupName}}
+                    Upload</span>
+                  <span
+                    *ngIf="c.fileNames != undefined && c.fileNames != null && c.fileNames.length > 0">{{ c.fileNames.length }}
+                    files uploaded</span>
+                </div>
+              </div>
+            </div>
+
+            <label class="text-label" *ngIf="c.label && c.componentType!='CHECKBOX'">{{c.label}}</label>
+            <input id="{{c.id}}" class="text-input" *ngSwitchCase="'TEXT'" [attr.maxlength]="c.chars"
+              [ngStyle]="{'height':c.dimHeight+'px', 'width': c.dimWidth +'px'}" type="text" name="{{c.name}}"
+              (input)="textChange(c)" (keypress)="checkTransition(c, $event)" value="{{c.value}}">
+
+            <textarea id="{{c.id}}" *ngSwitchCase="'TEXTAREA'" [attr.cols]="c.cols" [attr.rows]="c.rows"
+              [ngStyle]="{'height':c.dimHeight+'px', 'width': c.dimWidth +'px', 'margin-top':'25px'}" type="text"
+              name="{{c.name}}" (input)="textAreaChange(c)"
+              (keypress)="checkTransition(c, $event)">{{c.value}}</textarea>
+
+            <div id="{{c.id}}" *ngSwitchCase="'RADIO'">
+              <div *ngFor="let r of c.radioComponent; let i = index" class='formInputCheckRadio'>
+                <input class="class-radio" id="{{c.id}}_{{i}}" value="{{c.value}}" style="width: 15px;" type="radio"
+                  name="{{c.groupName}}" [checked]="r?.isChecked === true" #radio
+                  (click)="radioChange(c, r, radio.id); checkTransition(c, $event);">
+                <label for="{{c.id}}_{{i}}">{{r.label}}</label><br>
+              </div>
+            </div>
+            <div *ngSwitchCase="'CHECKBOX'" class='formInputCheckRadio'>
+              <input (click)="checkboxChange(c, i); checkTransition(c, $event)" id="{{c.id}}"
+                style="height: 15px !important; width: 15px !important;" type="checkbox" value="{{c.value}}"
+                [checked]="!!c?.directAnswer?.isChecked" name="{{c.groupName}}">
+              <label for="{{c.id}}" style='margin-bottom:0; top:0px; position: relative;'>{{c?.label}}</label>
+            </div>
+
+            <div *ngSwitchCase="'RANGE'" class='rangecontainer' id="{{c.id}}">
+              <input style="height: 50px;" name="{{c.name}}" type="range" min='{{c.min}}' max='{{c.max}}'
+                step='{{c.step}}' (change)="rangeChange(c,$event)"
+                [attr.list]="c.options?.showticks==true || c.options?.showticks=='true' ? 'tickmarks':''"
+                [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}"
+                value="{{c.directAnswer?.value}}" />
+              <ul class='rangelabel' *ngIf="c.options.showlabels==true || c.options.showlabels=='true'">
+                <li *ngFor="let v of getLabels(c)">{{v.label}}</li>
+              </ul>
+              <datalist id="tickmarks" *ngIf="c.options?.showticks==true || c.options?.showticks=='true'"
+                [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">
+                <option *ngFor="let v of getTicks(c)" value="{{v.value}}">
+              </datalist>
+            </div>
+
+            <div *ngSwitchCase="'IMAGE'" class="e-image" [ngClass]="{'selected': c.options.isChecked}"
+              (click)="imageChange(c);checkTransition(c, $event)">
+              <img [urlApi]="c.url" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}"
+                id="{{c.id}}" />
+            </div>
+
+            <div *ngSwitchCase="'VIDEO'" class="e-image">
+              <div *ngIf="c.options.commands == 'true' || c.options.slowOption == 'true'">
+                <vg-player (onPlayerReady)="onPlayerReady($event, c.id,c)">
+                  <vg-overlay-play *ngIf="c.options.commands == 'true'"></vg-overlay-play>
+                  <vg-buffering *ngIf="c.options.commands == 'true'"></vg-buffering>
+
+                  <vg-scrub-bar *ngIf="c.options.commands == 'true'">
+                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                    <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+                  </vg-scrub-bar>
+
+                  <vg-controls>
+                    <vg-play-pause *ngIf="c.options.commands == 'true'"></vg-play-pause>
+                    <vg-playback-button *ngIf="c.options.slowOption == 'true'"></vg-playback-button>
+
+                    <vg-time-display *ngIf="c.options.commands == 'true'" vgProperty="current" vgFormat="mm:ss">
+                    </vg-time-display>
+
+                    <vg-scrub-bar *ngIf="c.options.commands == 'true'" style="pointer-events: none;"></vg-scrub-bar>
+
+                    <vg-time-display *ngIf="c.options.commands == 'true'" vgProperty="left" vgFormat="mm:ss">
+                    </vg-time-display>
+                    <vg-time-display *ngIf="c.options.commands == 'true'" vgProperty="total" vgFormat="mm:ss">
+                    </vg-time-display>
+
+                    <vg-track-selector *ngIf="c.options.commands == 'true'"></vg-track-selector>
+                    <vg-mute *ngIf="c.options.commands == 'true'"></vg-mute>
+                    <vg-volume *ngIf="c.options.commands == 'true'"></vg-volume>
+
+                    <vg-fullscreen *ngIf="c.options.commands == 'true'"></vg-fullscreen>
+                  </vg-controls>
+                  <video [vgMedia]="media" #media id="{{c.id}}" (click)="clickVideo($event)"
+                    preload="{{getAutoplay(c)}}" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">
+                    <source src="{{c.url}}" type="video/mp4">
+                  </video>
+                </vg-player>
+              </div>
+
+              <div *ngIf="c.options.commands === 'false' &&  c.options.slowOption === 'false'">
+                <vg-player (onPlayerReady)="onPlayerReady($event, c.id,c)">
+                  <video [vgMedia]="media" #media id="{{c.id}}" (click)="clickVideo($event)"
+                    preload="{{getAutoplay(c)}}" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">
+                    <source src="{{c.url}}" type="video/mp4">
+                  </video>
+                </vg-player>
+              </div>
+            </div>
+
+            <div *ngSwitchCase="'TXTFILE'" class="e-image">
+              <a href="{{c.url}}" download>
+                <div [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px', 'text-align' : 'center'}"
+                  id="{{c.id}}">
+                  <i class="fa fa-download"
+                    [ngStyle]="{'font-size': (c.dimWidth+c.dimHeight)/10 +'px', 'display':'block'}"></i>
+                  <span>{{c.name}}</span>
+                </div>
+              </a>
+              <!-- <img [urlApi]=" c.url" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}"
+                  id="{{c.id}}" /> -->
+            </div>
+
+            <a href="{{c.url}}" download>
+              <div *ngSwitchCase="'ELANFILE'" class="e-image">
+                <div [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px', 'text-align' : 'center'}"
+                  id="{{c.id}}">
+                  <i class="fa fa-download"
+                    [ngStyle]="{'font-size': (c.dimWidth+c.dimHeight)/10 +'px', 'display':'block'}"></i>
+                  <span>{{c.name}}</span>
+                </div>
+              </div>
+            </a>
+
+            <div *ngSwitchCase="'CLICK_AREA'" class=" e-clickarea">
+              <div id="{{c.id}}" (click)="clickareaChange(c);checkTransition(c, $event)"
+                [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}"></div>
+            </div>
+
+            <div *ngSwitchCase="'TEXTBLOCK'">
+              <div [froalaView]="c.text" id="{{c.id}}"
+                [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px', 'color' : c.options.color, 'font-size' : c.options.fsize+'px' , 'overflow' : 'hidden','margin-top':'0px'}">
+              </div>
+            </div>
+
+            <button *ngSwitchCase="'BUTTON'" class="btn btn-{{c.options.bstyle}}"
+              (click)="checkbuttonChange(c); checkTransition(c, $event)"
+              [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">{{c.text}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="s-right s-relative" [ngStyle]="{'height': heightQuestionCenterContent}">
+    <div *ngIf="topic" class='voc-container'>
+      <div class='voc-title'>Vocabulary <i class="fa fa-2x fa-times pull-right" (click)="hideTopic()"></i></div>
+      <div class='voc-subcontainer'>
+        <div class="voc-lemma">{{topic.word}}</div>
+        <div class="voc-definition">{{topic.definition}}</div>
+      </div>
+    </div>
+    <div class="progress-wrapper">
+      <div class="title-progress">
+        Progress
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="getPercentuale()"
+          aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': getPercentuale()+'%'}"
+          style="width:0%;background-color: #959595;">
+          {{getPercentuale()}}%
+        </div>
+      </div>
+      <div class="text-center">
+        <button
+          *ngIf="test !== undefined && test !== null && test.options !== undefined && test.options !== null && test.options.changeable === 'true' && !(currentQuestionIndex<0 && currentSlideIndex<=0)"
+          class="btn btn-success" (click)="goToPrevSlide()">Back</button>
+        <button type='button' (click)="backQuestion()" class='escibutton btn btn-primary'>Save & Exit</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,246 @@
+<!-- <div class="main-container" [ngStyle]="{'min-height': wHeight}">
+  <div class="e-card">
+    <md-card>
+      <div class="card-title">
+        Video search
+      <div class="pull-right"><a routerLink="/home/streaming_tool/viewstreams" class="search-icons"><i class="material-icons">search</i></a></div>
+      </div>
+      <md-card-content>
+        <div class="e-content" [ngStyle]="{'height' : heightMedia}">
+            <div *ngIf="isLoading">
+              <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+            </div>
+            <md-list class="streaming-tool-list">
+                <md-list-item> 
+                  <div class="pull-left" class="list-left"> 
+                      <div *ngIf="!!video" class="video-container" >
+                          <vg-player width="100%">
+                             <video controls preload="auto">
+                                 <source src="{{video.videoUrl}}" type="video/mp4">
+                                 <track *ngIf="video.subs && video.subs[0]" kind="subtitles" label="{{video.subs[0].label}}" src="{{video.subs[0].url}}" default>
+                                 <track *ngIf="video.subs && video.subs[1]" kind="subtitles" label="{{video.subs[1].label}}" src="{{video.subs[1].url}}" default>
+                                 <track *ngIf="video.subs && video.subs[2]" kind="subtitles" label="{{video.subs[2].label}}" src="{{video.subs[2].url}}" default>
+                                 <track *ngIf="video.subs && video.subs[3]" kind="subtitles" label="{{video.subs[3].label}}" src="{{video.subs[3].url}}" default>
+                             </video>
+                           </vg-player>
+                        </div>
+                  </div>
+                  <div class="pull-right" class="list-right" *ngIf="!!video">
+                    <h2> <a>{{video.name}}</a></h2>
+                    <div class="description">
+                      duration: {{video.duration}} <br>
+                      size: {{video.size}} <br>
+                      format: {{video.format}} <br>
+                      date: {{video.date}} <br>
+                      <span *ngFor="let info of p.info">
+                        info: {{info}} <br>
+                      </span>
+                      <span  [ngStyle]="{'display': 'flex', 'justify-content': 'center', 'color':'#00ade5', 'margin-bottom': '5px'}"><i [ngStyle]="{'line-height': 0.9}" class="material-icons">
+                          cloud_download
+                          </i>&nbsp;Downloads</span>
+                      <span class="multi">
+                          <span class="single">
+                              <i class="material-icons">
+                                  movie
+                                  </i>
+                                  EAF file
+                          </span>
+                          <span class="single">
+                              <i class="material-icons">
+                                  videocam
+                                  </i>
+                                  SRT file
+                          </span>
+                          <span class="single">
+                              <i class="material-icons">
+                                  format_align_left
+                                  </i>
+                                  Text file
+                          </span>
+                          <span class="single">
+                              <i class="material-icons">
+                                  picture_as_pdf
+                                  </i>
+                                  PDF file
+                          </span>
+                          <span class="single">
+                              <i class="material-icons">
+                                  library_books
+                                  </i>
+                                  Epub file
+                          </span>
+                        </span>
+                    </div>
+                    <hr [ngStyle]="{'margin': '5px 0'}">
+                      {{video.description}} 
+                  </div>
+                </md-list-item>
+              </md-list> -->
+           <!-- <div *ngIf="!!video" class="video-container" >
+             <vg-player width="100%" height="300px">
+                <video controls preload="auto">
+                    <source src="{{video.videoUrl}}" type="video/mp4">
+                    <track *ngIf="video.subs && video.subs[0]" kind="subtitles" label="{{video.subs[0].label}}" src="{{video.subs[0].url}}" default>
+                    <track *ngIf="video.subs && video.subs[1]" kind="subtitles" label="{{video.subs[1].label}}" src="{{video.subs[1].url}}" default>
+                    <track *ngIf="video.subs && video.subs[2]" kind="subtitles" label="{{video.subs[2].label}}" src="{{video.subs[2].url}}" default>
+                    <track *ngIf="video.subs && video.subs[3]" kind="subtitles" label="{{video.subs[3].label}}" src="{{video.subs[3].url}}" default>
+                </video>
+              </vg-player>
+           </div>
+           <md-grid-list cols="3" rowHeight="200px">
+              <md-grid-tile [colspan]="1" [rowspan]="1">
+                <div *ngIf="!!video">
+                  <h2> <a routeLink="/home/">{{video.name}}</a></h2>
+                  <div class="description"> -->
+                    <!-- duration: {{video.duration}} <br>
+                    size: {{video.size}} <br>
+                    format: {{video.format}} <br>
+                    date: {{video.date}} <br> -->
+                    <!-- <span *ngFor="let info of video.info"> -->
+                      <!-- info: {{info}} <br> -->
+                    <!-- </span>
+                  </div>
+                </div>
+              </md-grid-tile>
+              <md-grid-tile [colspan]="1" [rowspan]="1"  class="grid-border">
+                
+              </md-grid-tile>
+              <md-grid-tile [colspan]="1" [rowspan]="1"  class="grid-border">
+               
+              </md-grid-tile>
+            </md-grid-list> -->
+            <!-- <div class="video-description">
+              <hr> -->
+              <!-- {{video.description}}  -->
+            <!-- </div> -->
+          <!-- </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div> -->
+
+<div class="main-container" [ngStyle]="{'min-height': wHeight}">
+    <div class="e-card">
+      <md-card>
+        <div class="card-title">
+          Video search
+          <div class="pull-right"><a routerLink="/home/streaming_tool/viewstreams" class="search-icons"><i class="material-icons">search</i></a></div>
+        </div>
+        <md-card-content>
+          <div class="e-content" [ngStyle]="{'height' : heightMedia}">
+            <div class="m-body">
+              <md-list class="streaming-tool-list">
+                  <md-list-item  style="height: 295px;"> 
+                    <div *ngIf="!!video" class="pull-left" class="list-left"> 
+                            <vg-player width="100%" height="300px">
+                               <video controls preload="auto">
+                                   <source src="{{video.videoUrl}}" type="video/mp4">
+                                   <track *ngIf="video.subs && video.subs[0]" kind="subtitles" label="{{video.subs[0].label}}" src="{{video.subs[0].url}}" default>
+                                   <track *ngIf="video.subs && video.subs[1]" kind="subtitles" label="{{video.subs[1].label}}" src="{{video.subs[1].url}}" default>
+                                   <track *ngIf="video.subs && video.subs[2]" kind="subtitles" label="{{video.subs[2].label}}" src="{{video.subs[2].url}}" default>
+                                   <track *ngIf="video.subs && video.subs[3]" kind="subtitles" label="{{video.subs[3].label}}" src="{{video.subs[3].url}}" default>
+                               </video>
+                             </vg-player>
+                          </div>
+                    <div class="pull-right" class="list-right" *ngIf="!!video">
+                      <h2> <a routerLink="viewvideo/{{video.id}}">{{video.name}}</a></h2>
+                      <div class="description">
+                        duration: {{video.duration}} <br>
+                        size: {{video.size}} <br>
+                        format: {{video.format}} <br>
+                        date: {{video.date}} <br>
+                        <span *ngFor="let info of video.info">
+                          info: {{info}} <br>
+                        </span>
+                        <span  [ngStyle]="{'display': 'flex', 'justify-content': 'center', 'color':'#00ade5', 'margin-bottom': '5px'}"><i [ngStyle]="{'line-height': 0.9}" class="material-icons">
+                            cloud_download
+                            </i>&nbsp;Downloads</span>
+                        <span class="multi">
+                            <span class="single">
+                                <i class="material-icons">
+                                    movie
+                                    </i>
+                                    EAF file
+                            </span>
+                            <span class="single">
+                                <i class="material-icons">
+                                    videocam
+                                    </i>
+                                    SRT file
+                            </span>
+                            <span class="single">
+                                <i class="material-icons">
+                                    format_align_left
+                                    </i>
+                                    Text file
+                            </span>
+                            <span class="single">
+                                <i class="material-icons">
+                                    picture_as_pdf
+                                    </i>
+                                    PDF file
+                            </span>
+                            <span class="single">
+                                <i class="material-icons">
+                                    library_books
+                                    </i>
+                                    Epub file
+                            </span>
+                          </span>
+                          <span class="multi" *ngIf="!isLoading">
+                              <div class="share-buttons sb-buttons sb-style sb-style-colors">
+                                <div class="sb-button facebook">
+                                  <a href="{{getFacebookLink()}}" target="blank">
+                                    <div class="sb-template"><i class="fa fa-facebook"></i></div>
+                                  </a>
+                                </div>
+                                <div class="sb-button twitter">
+                                    <a href="{{getTwitterLink()}}" target="blank">
+                                      <div class="sb-template"><i class="fa fa-twitter"></i></div>
+                                    </a>
+                                  </div>
+                                  <div class="sb-button envelope">
+                                      <button (click)="toggleCopyLink()">
+                                        <div class="sb-template"><i class="fa fa-envelope"></i></div>
+                                      </button>
+                                    </div> 
+                              </div>
+                          </span>
+                          <span class="multi" *ngIf="!!showCopy">
+                              <input name="copyLink" [(ngModel)]="copyLink" (click)="$event.target.select()"/>
+                          </span>
+                          <span class="multi">
+                              <!--<share-button button="facebook" [title]="video.name"></share-button>-->
+                              
+                               <!--<share-buttons 
+                               [linkedIn]=false
+                               [tumblr]=false
+                               [google]=false
+                               [pinterest]=false
+                               [stumbleUpOn]=false
+                               [reddit]=false
+                               ></share-buttons>-->
+                               
+                            <!--<share-buttons [theme]="'material-light'"
+                              [include]="['facebook','twitter','email','copy']"
+                              [show]="4"
+                              [size]="-2"
+                              [title]={{video.name}}
+                              [description]="'descrizione'"
+                              [image]="'http://www.google.com'"
+                              [tags]="'tag1 tag2'"
+                          ></share-buttons>-->
+                          </span>
+                      </div>
+                      <hr [ngStyle]="{'margin': '5px 0'}">
+                        {{video.description}} 
+                    </div>
+                  </md-list-item>
+                </md-list>
+            </div>
+          </div>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+  

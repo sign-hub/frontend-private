@@ -1,0 +1,78 @@
+<div class="container">
+  <div *ngFor="let c of grammar.parts; let i = index" class='firstlevel row'>
+    <div *ngIf="c.name && c.type=='ARTICLE'" class='toc-element level-1 article col-sm-11 col-sm-offset-2'
+      [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == c.uuid }">
+      <div>
+        <a href="javascript:void(0)" (click)="setTextInput(c.uuid, c.name)"> {{c.name}} </a>
+      </div>
+    </div>
+    <div *ngIf="c.name && c.type=='PART'" class='toc-element level-1 col-sm-11 col-sm-offset-1'
+      [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == c.uuid }">
+      <span *ngIf="hasChild(c)" (click)="rotate($event)" id="{{c.uuid}}" class="material-icons arrow_right"
+        style="cursor: pointer;">keyboard_arrow_right</span>
+      <div>
+        <a href="javascript:void(0)" (click)="setTextInput(c.uuid, c.name)"> {{c.name}} </a>
+      </div>
+    </div>
+    <div id="secondlevel" *ngFor="let cc of c.parts; let ii = index" class='secondlevel row foglia'>
+      <div *ngIf="cc.name" class='toc-element level-2 col-sm-10 col-sm-offset-2'
+        [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == cc.uuid }">
+        <span *ngIf="hasChild(cc)" (click)="rotate($event)" id="{{cc.uuid}}" class="material-icons arrow_right"
+          style="cursor: pointer;">keyboard_arrow_right</span>
+        <div>
+          <a href="javascript:void(0)" (click)="setTextInput(cc.uuid, cc.name)"> {{cc.name}}</a>
+        </div>
+      </div>
+      <div id="thirdlevel" *ngFor="let ccc of cc.parts; let iii = index" class='thirdlevel row foglia'>
+        <div *ngIf="ccc && ccc.name" class='toc-element level-3 col-sm-9 col-sm-offset-3'
+          [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == ccc.uuid }">
+          <span *ngIf="hasChild(ccc)" (click)="rotate($event)" id="{{ccc.uuid}}" class="material-icons arrow_right"
+            style="cursor: pointer;">keyboard_arrow_right</span>
+          <div>
+            <a href="javascript:void(0)" (click)="setTextInput(ccc.uuid, ccc.name)"> {{ccc.name}} </a>
+          </div>
+        </div>
+        <div id="fourthlevel" *ngFor="let cccc of ccc.parts; let iii = index" class='forthlevel row foglia'>
+          <div *ngIf="cccc && cccc.name" class='toc-element level-4 col-sm-8 col-sm-offset-4'
+            [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == cccc.uuid }">
+            <span *ngIf="hasChild(cccc)" (click)="rotate($event)" id="{{cccc.uuid}}" class="material-icons arrow_right"
+              style="cursor: pointer;">keyboard_arrow_right</span>
+            <div>
+              <a href="javascript:void(0)" (click)="setTextInput(cccc.uuid, cccc.name)">{{cccc.name}}</a>
+            </div>
+          </div>
+          <div id="fifthlevel" *ngFor="let ccccc of cccc.parts; let iii = index" class='sixthlevel row foglia'>
+            <div *ngIf="ccccc && ccccc.name" class='toc-element level-5 col-sm-7 col-sm-offset-5'
+              [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == ccccc.uuid }">
+              <span *ngIf="hasChild(ccccc)" (click)="rotate($event)" id="{{ccccc.uuid}}"
+                class="material-icons arrow_right" style="cursor: pointer;">keyboard_arrow_right</span>
+              <div>
+                <a href="javascript:void(0)" (click)="setTextInput(ccccc.uuid, ccccc.name)">{{ccccc.name}}</a>
+              </div>
+            </div>
+            <div id="sixthlevel" *ngFor="let cccccc of ccccc.parts; let iii = index" class='seventhlevel row foglia'>
+              <div *ngIf="cccccc && cccccc.name" class='toc-element level-6 col-sm-6 col-sm-offset-6'
+                [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == cccccc.uuid }">
+                <span *ngIf="hasChild(cccccc)" (click)="rotate($event)" id="{{cccccc.uuid}}"
+                  class="material-icons arrow_right" style="cursor: pointer;">keyboard_arrow_right</span>
+                <div>
+                  <a href="javascript:void(0)" (click)="setTextInput(cccccc.uuid, cccccc.name)">{{ccccc.name}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <div>
+    <md-input-container>
+      <input mdInput type="text" placeholder="Insert name" name="anchor" id="anchor" [value]="selectedText">
+    </md-input-container>
+  </div>
+  <div class="input-footer">
+    <button md-button color="primary" (click)="save()"><i class="material-icons">&#xE161;</i> Save</button>
+    <button md-button color="primary" [md-dialog-close]="true"><i class="material-icons">&#xE5CD;</i> Cancel</button>
+  </div>

@@ -1,0 +1,41 @@
+<div class="main-container" [ngStyle]="{'min-height': wHeight}">
+  <div class="e-card">
+    <md-card>
+      <div class="card-title">
+        <div>
+          <span style="margin-right:50px;">Managment</span>
+        </div>
+        <div class="save-btn">
+          <button md-button (click)="save()" class="btn-add-photo"><i class="material-icons">&#xE161;</i>
+            Save</button>
+        </div>
+      </div>
+      <md-card-content>
+        <div class="e-content">
+          <div style="width: 100%;" *ngIf="loading">
+            <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+          </div>
+          <div id="table-scroll" class="table-scroll">
+            <table id="main-table" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th *ngFor="let test of tests">{{test.TestName}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <th>{{user.name}}</th>
+                  <td *ngFor="let value of user.values">
+                    <md-checkbox (click)="checkboxState(user.userId,value.testId)" [checked]="value.checked == 'true'"></md-checkbox>
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

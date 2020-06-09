@@ -1,0 +1,49 @@
+@import "../../../share/theme.scss";
+
+.input-upload {
+    width: 300px;
+}
+
+.input-title {
+    padding: 2px 5px 2px 5px;
+    background-color: $bg-card-title;
+    font-weight: bold;
+    color: $color-card-title;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+}
+
+.input-upload {
+    width: 60vw;
+    .mat-form-field {
+        width: 55vw;
+    }
+}
+
+.input-body {
+    padding: 20px;
+}
+
+.input-footer {
+    padding: 15px;
+    text-align: center;
+}
+
+/deep/.mat-dialog-container {
+    padding: 0px !important;
+    border-radius: 0px;
+}
+
+.fr-wrapper > div {
+    display: none;
+    /*position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;*/
+}
+.fr-wrapper > div.fr-element {
+    display: block;
+}

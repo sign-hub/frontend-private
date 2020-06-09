@@ -1,0 +1,38 @@
+<div class="main-container" [ngStyle]="{'min-height': wHeight}">
+  <div class="e-card">
+    <md-card>
+      <div class="card-title">
+        Grammar list
+      </div>
+      <md-card-content>
+        <div class="e-content">
+          <div style="width: 100%;" *ngIf="loading">
+            <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+          </div>
+          <div class="e-list-head">
+              <div class='flexcontainer'>
+                  <div class='col-md-5 overfloxhidden'>Name</div>
+                  <div class='col-md-3'>Date</div>
+                  <div class='col-md-3'>Revision</div>
+              </div>
+            </div>
+          <div class="e-list" *ngFor="let e of data; let i = index" >
+            <md-checkbox [(ngModel)]="e.checked" name="check" (change)="chooseTest(e)"  class='flexcontainer'>
+                <div class='col-md-5 overfloxhidden'>{{e.grammarName}}</div>
+                <div class='col-md-3'>{{e.creationDate}}</div>
+                <div class='col-md-3'>{{e.revisionDate}}</div>
+            </md-checkbox>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+    <div class="e-footer">
+      <button *ngIf="user.role === 'ADMIN' || user.role === 'GR_ADMIN' || user.role === 'GRAMMAR_ADMIN' " md-button color="primary" (click)="addGrammar()" [disabled]="isLoading">Add</button>
+      <button md-button color="primary" (click)="openTestView()"><i class="material-icons">search</i> View</button>
+      <button md-button (click)="editTest()" color="primary"><i class="material-icons">border_color</i> Edit</button>
+      <a md-button color="primary" href="{{showPdf()}}" target="_blank" [disabled]="test?.pdfAvailable == false"><i class="material-icons">picture_as_pdf</i>Pdf</a>
+      <a md-button color="primary" href="{{showHtml()}}" [disabled]="test?.htmlAvailable == false"><i class="material-icons">print</i>Html</a>
+      <button *ngIf="isRemove" md-button color="primary" [disabled]="!isRemove" (click)="deleteTest()"><i class="material-icons">&#xE872;</i> Remove</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="m-upload">
+  <form #nForm="ngForm">
+    <div class="d-title">
+      Add Folder
+    </div>
+    <div class="d-body">
+      <md-input-container>
+        <input mdInput placeholder="Folder name" name="name" id="name" [(ngModel)]="folderName">
+      </md-input-container>
+    </div>
+    <div class="d-footer">
+      <button md-button color="primary" [disabled]="!folderName" (click)="uploadAll()">
+        <i class="material-icons">add</i>
+        Create</button>
+      <button md-button color="primary" [md-dialog-close]="true"><i class="material-icons">&#xE5CD;</i> Cancel</button>
+    </div>
+  </form>
+</div>

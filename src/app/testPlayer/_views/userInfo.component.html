@@ -1,0 +1,29 @@
+<div class="input-upload">
+    <form #nForm="ngForm">
+        <div class="input-title">
+            User Info
+        </div>
+        <div class="input-body">
+            <md-input-container class="p-full-width">
+                    <input mdInput placeholder="Name" name="name" [(ngModel)]="input.name" #name="ngModel" id="name" required>
+            </md-input-container>
+            <md-input-container class="p-full-width">
+                    <input mdInput placeholder="Surname" name="surname" [(ngModel)]="input.surname" #surname="ngModel" id="surname" required>
+            </md-input-container>
+            <md-input-container class="p-full-width">
+                <input mdInput type="number" placeholder="Age" name="age" [(ngModel)]="input.age" #chars="ngModel" id="age" required>
+            </md-input-container>
+            <md-radio-group md-autofocus name="gender" [(ngModel)]="input.gender" class="p-full-width" required>
+                    <md-radio-button value="M" class="md-primary">Male</md-radio-button>
+                    <md-radio-button value="F"> Female </md-radio-button>
+            </md-radio-group>
+            <md-input-container class="p-full-width">
+                <input mdInput placeholder="Age of acquisition" name="age_acq" type="number" min="0" [(ngModel)]="input.age_acq" #name="ngModel" id="age" required>
+            </md-input-container>
+        </div>
+        <div class="input-footer">
+            <button md-button color="primary" (click)="save()"><i class="material-icons">&#xE161;</i> Save</button>
+            <!--<button md-button color="primary" [md-dialog-close]="true"><i class="material-icons">&#xE5CD;</i> Cancel</button> -->
+        </div>
+    </form>
+</div>

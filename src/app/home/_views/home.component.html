@@ -1,0 +1,180 @@
+<nav class="navbar navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="">
+        <!--<img src="assets/img/logo-e.png" height="40px" alt="logo" />-->
+        <img src="assets/img/SH_logo.png" height="40px" alt="logo" /> </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav" [ngSwitch]="selectedMenu">
+
+
+        <ng-template [ngSwitchCase]="'MenuStart'">
+
+
+          <li *ngIf="canTesting()" routerLinkActive="active" class="l-menu">
+            <a class="nav-link" routerLink="/home" mdTooltip="{{'tooltip.menu.home.testing_tool' | translate }}"
+              (click)="changeMenu('MenuTesting')">{{'menu.testingtool' | translate}}</a>
+          </li>
+          <li *ngIf="canAtlas()" routerLinkActive="active" class="l-menu">
+            <a class="nav-link" routerLink="/home/atlas" mdTooltip="{{'tooltip.menu.home.atlas_tool' | translate }}"
+              (click)="changeMenu('MenuAtlas')">{{'menu.atlas' | translate}}</a>
+          </li>
+          <li *ngIf="canGrammar()" routerLinkActive="active" class="l-menu">
+            <a class="nav-link" routerLink="/home/grammar_tool/grammarlist"
+              mdTooltip="{{'tooltip.menu.home.grammar_tool' | translate }}"
+              (click)="changeMenu('GrammarTool')">{{'menu.grammar_tool' | translate}}</a>
+          </li>
+          <li *ngIf="canStreaming()" routerLinkActive="active" class="l-menu">
+            <a class="nav-link" routerLink="/home/streaming_tool"
+              mdTooltip="{{'tooltip.menu.home.streaming_tool' | translate }}"
+              (click)="changeMenu('StreamingTool')">{{'menu.streaming_tool' | translate}}</a>
+          </li>
+          <li *ngIf="canAdmin()" class="l-menu">
+            <a class="nav-link" routerLink="/home/admin"
+              mdTooltip="{{'tooltip.menu.home.admin' | translate }}">{{'menu.admin' | translate}}</a>
+          </li>
+          <!--<li class="l-menu" *ngIf="user.role == 'ADMIN'">
+            <a class="nav-link" routerLink="/home" mdTooltip="Load Users CSV"
+              (click)="loadUsers()">Load Users CSV</a>
+          </li>-->
+          <li class="l-menu" *ngIf="user.role == 'ADMIN'">
+            <a class="nav-link" routerLink="/home/contacts" mdTooltip="Manage contacts">Contacts</a>
+          </li>
+        </ng-template>
+
+        <ng-template [ngSwitchCase]="'MenuTesting'">
+          <li class="l-menu" routerLinkActive="active">
+            <a class="nav-link" routerLink="/home/testingtool/testlist" data-toggle="dropdown" role="button"
+              aria-haspopup="true" aria-expanded="true"
+              mdTooltip="{{'tooltip.menu.testingtool.test_list' | translate }}">{{'menu.test_list' | translate}}
+              <span class="caret link-icon"></span>
+            </a>
+            <ul class="dropdown-menu e-dropdown-menu pull-right">
+              <li *ngIf="!isUser" class="e-menu" (click)="createTest('/home/testingtool/testedit','testingtool')">
+                <a>New test</a>
+              </li>
+            </ul>
+          </li>
+          <li *ngIf="!isUser" routerLinkActive="active" class="l-menu">
+            <a class="nav-link" routerLink="/home/testingtool/media"
+              mdTooltip="{{'tooltip.menu.testingtool.media' | translate }}">{{'menu.media' | translate}} </a>
+          </li>
+          <li class="l-menu">
+            <a class="nav-link" routerLink="/home/testingtool/report"
+              mdTooltip="{{'tooltip.menu.testingtool.report' | translate }}">{{'menu.report' | translate}}</a>
+          </li>
+          <li class="l-menu">
+            <a class="nav-link" href="/api/rest/public/standalone.zip" download
+              mdTooltip="{{'tooltip.menu.testingtool.report' | translate }}">Standalone</a>
+          </li>
+
+        </ng-template>
+        <ng-template [ngSwitchCase]="'MenuAtlas'">
+          <li class="l-menu" routerLinkActive="active">
+            <a class="nav-link" routerLink="/home/atlas/testlist" data-toggle="dropdown" role="button"
+              aria-haspopup="true" aria-expanded="true"
+              mdTooltip="{{'tooltip.menu.atlas.test_list' | translate }}">{{'menu.test_list' | translate}} Atlas
+              <span class="caret link-icon" *ngIf="user.role != 'AT_CON_PRO'"></span>
+            </a>
+            <ul *ngIf="user.role != 'AT_CON_PRO'" class="dropdown-menu e-dropdown-menu pull-right">
+              <li class="e-menu" (click)="createTest('/home/atlas/testedit', 'atlas')">
+                <a>New test Atlas</a>
+              </li>
+            </ul>
+          </li>
+          <li routerLinkActive="active" class="l-menu" *ngIf="user.role != 'AT_CON_PRO'">
+            <a class="nav-link" routerLink="/home/atlas/media"
+              mdTooltip="{{'tooltip.menu.atlas.media' | translate }}">{{'menu.media' | translate }}
+              Atlas </a>
+          </li>
+          <li class="l-menu">
+            <a class="nav-link" routerLink="/home/atlas/report"
+              mdTooltip="{{'tooltip.menu.atlas.report' | translate }}">{{'menu.report' | translate}}
+              Atlas</a>
+          </li>
+          <li *ngIf="user.role != 'AT_CON_PRO'" class="l-menu">
+            <a class="nav-link" routerLink="/home/atlas/management"
+              mdTooltip="{{'tooltip.menu.atlas.management' | translate }}">{{'menu.management' | translate}}</a>
+          </li>
+        </ng-template>
+
+        <ng-template [ngSwitchCase]="'GrammarTool'">
+          <li class="l-menu" routerLinkActive="active">
+            <a class="nav-link" routerLink="/home/grammar_tool/grammarlist" data-toggle="dropdown" role="button"
+              aria-haspopup="true" aria-expanded="true"
+              mdTooltip="{{'tooltip.menu.grammartool.grammar_list' | translate }}">{{'menu.grammar_list' | translate}}
+              <span class="caret link-icon"></span>
+            </a>
+          </li>
+          <li routerLinkActive="active" class="l-menu">
+            <a class="nav-link" routerLink="/home/grammar_tool/media"
+              mdTooltip="{{'tooltip.menu.grammartool.media' | translate }}">{{'menu.media' | translate}} Grammar </a>
+          </li>
+        </ng-template>
+
+        <ng-container *ngIf="selectedMenu !== 'MenuStart' && user.role != 'AT_CON_PRO' && !isUserEditor">
+          <li class="l-menu">
+            <a class="nav-link" routerLink="/home" mdTooltip="{{'tooltip.menu.home.home' | translate }}"
+              (click)="changeMenu('MenuStart')">{{'menu.home' | translate}}</a>
+          </li>
+        </ng-container>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <!--<li class="dropdown" class="r-menu">
+          <a class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+            Language {{selectedLanguage}}
+            <span class="caret"></span>
+          </a>-->
+        <!--<ul class="dropdown-menu pull-right" style="min-width: 120px;" aria-labelledby="dropdownTranslation">
+            <li (click)="switchLanguage('en')">
+              <a class="r-menu-drop">&nbsp;{{'translation.en' | translate}}</a>
+            </li>
+            <li (click)="switchLanguage('fr')">
+              <a class="r-menu-drop">&nbsp;{{'translation.fr' | translate}}</a>
+            </li>
+          </ul>-->
+        <!--</li>-->
+        <li class="dropdown" class="r-menu">
+          <a class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false">
+            <img width="24" height="24" class="header-user-avatar"
+              src="https://secure.gravatar.com/avatar/74f9a4d1c5b8ad9c809771a5f75f7e17?s=52&amp;d=identicon"
+              alt="74f9a4d1c5b8ad9c809771a5f75f7e17?s=52&amp;d=identicon">{{user.name}}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a routerLink="/home/profile" class="r-menu-drop">
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;{{'menu.profile' | translate}}</a>
+            </li>
+            <!--<li>
+              <a class="r-menu-drop">
+                <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;{{'menu.setting' | translate}}</a>
+            </li>-->
+            <li role="separator" class="divider"></li>
+            <li>
+              <a (click)="logout()" class="r-menu-drop">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;{{'menu.logout' | translate}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+
+<router-outlet></router-outlet>

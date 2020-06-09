@@ -1,0 +1,27 @@
+@import "../../share/theme.scss";
+
+.nt-title {
+  padding: 2px 5px 2px 5px;
+  background-color: $bg-card-title;
+  font-weight: bold;
+  color: $color-card-title;
+  font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+}
+
+.nt-container {
+  width: 300px;
+}
+
+.nt-body {
+  padding: 20px;
+}
+
+/deep/ .mat-dialog-container {
+  padding: 0px !important;
+  border-radius: 0px;
+}
+
+.nt-action {
+  text-align: center;
+  padding-bottom: 10px;
+}

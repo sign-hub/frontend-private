@@ -1,0 +1,9 @@
+<div>
+  <div *ngIf="isLoading" style="width: 500px; padding: 20px;">
+    <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+  </div>
+  <img [urlApi]="image.mediaPath" (done)="doneLoading($event)" width="450px" />
+  <div class="preview-footer">
+    {{image.mediaName}}
+  </div>
+</div>

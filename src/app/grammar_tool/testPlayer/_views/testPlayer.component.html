@@ -1,0 +1,58 @@
+<div class="main-container grammar_test">
+  <div class="s-left">
+    <div class='toc-container' id='toc-container' [ngStyle]="{'height': heightTestEdit }">
+      <div class='row'>
+        <div class='toctitle'>
+          Table of contents:
+        </div>
+      </div>
+      <div *ngFor="let c of grammar.parts; let i = index" class='firstlevel row'>
+        <div *ngIf="c.name" class='toc-element level-1 col-sm-11 col-sm-offset-1'
+          [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == c.uuid }">
+          <a href='javascript:void(0)' (click)="getGrammarPart(c)">{{c.name}}</a>
+        </div>
+        <div *ngFor="let cc of c.parts; let ii = index" class='secondlevel row'>
+          <div *ngIf="cc.name" class='toc-element level-2 col-sm-10 col-sm-offset-2'
+            [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == cc.uuid }">
+            <a href='javascript:void(0)' (click)="getGrammarPart(cc)">{{cc.name}}</a>
+          </div>
+          <div *ngFor="let ccc of cc.parts; let iii = index" class='thirdlevel row'>
+            <div *ngIf="ccc && ccc.name" class='toc-element level-3 col-sm-9 col-sm-offset-3'
+              [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == ccc.uuid }">
+              <a href='javascript:void(0)' (click)="getGrammarPart(ccc)">{{ccc.name}}</a>
+            </div>
+            <div *ngFor="let cccc of ccc.parts; let iii = index" class='forthlevel row'>
+              <div *ngIf="cccc && cccc.name" class='toc-element level-4 col-sm-8 col-sm-offset-4'
+                [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == cccc.uuid }">
+                <a href='javascript:void(0)' (click)="getGrammarPart(cccc)">{{cccc.name}}</a>
+              </div>
+              <div *ngFor="let ccccc of cccc.parts; let iii = index" class='sixthlevel row'>
+                <div *ngIf="ccccc && ccccc.name" class='toc-element level-5 col-sm-7 col-sm-offset-5'
+                  [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == ccccc.uuid }">
+                  <a href='javascript:void(0)' (click)="getGrammarPart(ccccc)">{{ccccc.name}}</a>
+                </div>
+                <div *ngFor="let cccccc of ccccc.parts; let iii = index" class='seventhlevel row'>
+                  <div *ngIf="cccccc && cccccc.name" class='toc-element level-6 col-sm-6 col-sm-offset-6'
+                    [ngClass]="{ 'selected' : !!grammarPart && grammarPart.uuid == cccccc.uuid }">
+                    <a href='javascript:void(0)' (click)="getGrammarPart(cccccc)">{{cccccc.name}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="s-center">
+    <div class="s-title">
+      {{grammarTitle}}
+    </div>
+    <div *ngIf="!!grammarPart" class="s-content" id="s-content">
+      <div placeholder="Text" name="text" [innerHTML]="grammarPart.html" id="text"></div>
+    </div>
+  </div>
+
+  <div class="s-right" [ngStyle]="{'min-height': hieghtQuestion}">
+  </div>
+</div>

@@ -1,0 +1,46 @@
+.container {
+  width: 500px;
+  height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  .active {
+    display: block;
+  }
+
+  .arrow_right {
+    position: absolute;
+    left: -7px;
+  }
+
+  .foglia {
+    display: none;
+  }
+  /* div:not(.firstlevel) .toc-element {
+    max-height: 0;
+    overflow: hidden;
+    display: none;
+  } */
+  .active ~ .foglia {
+    display: block;
+    .toc-element {
+      max-height: 100%;
+      overflow: auto;
+      display: block;
+    }
+  }
+}
+
+.input-footer {
+  padding: 15px;
+  text-align: center;
+}
+
+::ng-deep {
+  .mat-input-container {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 100%;
+  }
+}

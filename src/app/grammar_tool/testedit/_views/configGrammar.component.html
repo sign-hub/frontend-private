@@ -1,0 +1,61 @@
+<div class="config-question-container">
+  <form #nForm="ngForm">
+    <div class="config-question-title">
+      Section edit
+    </div>
+    <div class="e-loading" *ngIf="isLoading">
+      <md-progress-bar mode="indeterminate"></md-progress-bar>
+    </div>
+    <div class="config-question-body">
+        <div class="m-action">
+          <md-input-container>
+            <input mdInput placeholder="{{'admin.filter.name' | translate}}" name="name" [(ngModel)]="search.name"
+                   #name="ngModel" id="name">
+          </md-input-container>
+          <md-input-container>
+            <input mdInput placeholder="{{'admin.filter.email' | translate}}" name="email" [(ngModel)]="search.email"
+                   #email="ngModel" id="email">
+          </md-input-container>
+          <md-select placeholder="{{'admin.filter.role' | translate}}" name="role" [(ngModel)]="search.role"
+                     #role="ngModel" id="role">
+            <md-option *ngFor="let r of roles" [value]="r.key">
+              {{ r.value }}
+            </md-option>
+          </md-select>
+          <button md-button class="m-btn-filter" (click)="filterListUser()"><i class="material-icons m-icon-filter">&#xE152;</i>
+          </button>
+        </div>
+        <div class="m-body">
+          <table class="table table-striped a-table-hover" id="tbAdmin">
+            <thead>
+            <tr>
+              <th>{{'admin.table.name' | translate}}</th>
+              <th>{{'admin.table.surname' | translate}}</th>
+              <th>{{'admin.table.email' | translate}}</th>
+              <th>{{'admin.table.profile' | translate}}</th>
+              <th>{{'admin.table.status' | translate}}</th>
+              <th>{{'admin.table.editor' | translate}}</th>
+              <th>{{'admin.table.content_provider' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of users; let i = index">
+              <td>{{user.name}}</td>
+              <td>{{user.surname}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.role | role }}</td>
+              <td>{{user.deleted | status}}</td>
+              <td style="text-align: center;"> <md-checkbox [checked]="user.editor" (click)="chooseEditor(i, user)"></md-checkbox></td>
+              <td style="text-align: center;"><md-checkbox [checked]="user.contentProvider" (click)="chooseContentProvider(i, user)"></md-checkbox></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <div class="question-footer">
+      <button md-button color="primary" class="btn-test" [md-dialog-close]="true"><i class="material-icons">&#xE5CD;</i>
+        <br/>Close
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,24 @@
+<div class="nt-container">
+  <form #nForm="ngForm">
+    <div class="nt-title">
+      New test
+    </div>
+    <div class="nt-body">
+      <md-input-container class="p-full-width">
+        <input mdInput required type="text" placeholder="Test name" name="TestName" [(ngModel)]="test.TestName"
+               #TestName="ngModel" id="TestName">
+        <md-error *ngIf="(TestName.errors && (TestName.dirty || TestName.touched))">
+          Enter test name...
+        </md-error>
+      </md-input-container>
+    </div>
+    <div class="nt-action">
+      <button md-button color="primary" [disabled]="loading || (!nForm.form.valid)" (click)="newTest()"><i
+        *ngIf="loading" class="fa fa-circle-o-notch fa-spin"></i><i *ngIf="!loading" class="material-icons">&#xE161;</i><br/>New
+        Test
+      </button>
+      <button md-button color="primary" [md-dialog-close]="true"><i class="material-icons">&#xE5CD;</i><br/>Cancel
+      </button>
+    </div>
+  </form>
+</div>

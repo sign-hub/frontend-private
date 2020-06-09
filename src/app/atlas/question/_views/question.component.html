@@ -1,0 +1,364 @@
+<div class="slide-head" [ngStyle]="{'min-height': hieghtQuestion}">
+  <div class="s-left" [ngStyle]="{'min-height': hieghtQuestion}">
+    <div class="item-component drag-component"
+      mdTooltip="{{'tooltip.actions.atlas.components.input_field' | translate }}" mdTooltipPosition="right"
+      (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'TEXT', 'updated': false}">
+      <i class="material-icons">&#xE167;</i> Input short text
+    </div>
+    <div class="item-component drag-component" mdTooltip="{{'tooltip.actions.atlas.components.text_area' | translate }}"
+      mdTooltipPosition="right" (onDragStart)="ondragstart(null)" dnd-draggable
+      [dragData]="{'type': 'TEXTAREA', 'updated': false}">
+      <i class="material-icons">&#xE167;</i> Input long text
+    </div>
+    <div class="item-component drag-component"
+      mdTooltip="{{'tooltip.actions.atlas.components.clickable_area' | translate }}" mdTooltipPosition="right"
+      (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'CLICK_AREA', 'updated': false}">
+      <i class="material-icons">&#xE434;</i> Clickable area
+    </div>
+    <div class="item-component drag-component"
+      mdTooltip="{{'tooltip.actions.atlas.components.uploads_area' | translate }}" mdTooltipPosition="right"
+      (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'UPLOADS', 'updated': false}">
+      <i class="material-icons">&#xE434;</i> Uploads area
+    </div>
+    <div class="item-component drag-component" mdTooltip="{{'tooltip.actions.atlas.components.radio' | translate }}"
+      mdTooltipPosition="right" (onDragStart)="ondragstart(null)" dnd-draggable
+      [dragData]="{'type': 'RADIO', 'updated': false}">
+      <i class="material-icons">&#xE837;</i> Radio
+    </div>
+    <div class="item-component drag-component" mdTooltip="{{'tooltip.actions.atlas.components.checkbox' | translate }}"
+      mdTooltipPosition="right" (onDragStart)="ondragstart(null)" dnd-draggable
+      [dragData]="{'type': 'CHECKBOX', 'updated': false}">
+      <i class="material-icons">&#xE834;</i>Checkbox
+    </div>
+    <div class="item-component drag-component" mdTooltip="{{'tooltip.actions.atlas.components.table' | translate }}"
+      mdTooltipPosition="right" (onDragStart)="ondragstart(null)" dnd-draggable
+      [dragData]="{'type': 'CHECKABLETABLE', 'updated': false}">
+      <i class="material-icons">&#xE021;</i> Table
+    </div>
+    <div class="item-component drag-component"
+      mdTooltip="{{'tooltip.actions.atlas.components.range_slider' | translate }}" mdTooltipPosition="right"
+      (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'RANGE', 'updated': false}">
+      <i class="material-icons">&#xE8D4;</i> Range slider
+    </div>
+    <div class="item-component drag-component"
+      mdTooltip="{{'tooltip.actions.atlas.components.text_block' | translate }}" mdTooltipPosition="right"
+      (onDragStart)="ondragstart(null)" dnd-draggable [dragData]="{'type': 'TEXTBLOCK', 'updated': false}">
+      <i class="material-icons">&#xE167;</i> Text Block
+    </div>
+    <div class="item-component drag-component" mdTooltip="{{'tooltip.actions.atlas.components.button' | translate }}"
+      mdTooltipPosition="right" (onDragStart)="ondragstart(null)" dnd-draggable
+      [dragData]="{'type': 'BUTTON', 'updated': false}">
+      <i class="material-icons">&#xE167;</i> Button
+    </div>
+    <div class="text-center">
+      <span style="margin-top:10px;margin-right:10px;font-weight: bold">GRID</span> OFF <md-slide-toggle
+        [checked]="!!grid" (change)="toggleGrid($event)">ON </md-slide-toggle>
+    </div>
+  </div>
+  <div class="s-center"
+    [ngStyle]="{'height': heightQuestionCenter, 'width':widthQuestionCenter, 'background-color' : backgroundColor }">
+    <div class="s-title">
+      {{currentQuestionName}}
+    </div>
+    <div class="s-content" id="s-content" [ngStyle]="{'height': heightQuestionCenterContent, 'position':'relative'}">
+      <div *ngIf="mediaLoading" class="testdownload-overlay">
+        <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+      </div>
+      <div *ngIf="grid" class="active overlaydrop"
+        [ngStyle]="{'margin-top': '0','background-size': step+'px '+ step+'px','z-index': '0'}"></div>
+      <div dnd-droppable (onDropSuccess)="addComponent($event)" [ngClass]="{'active': !!mouving }"
+        [ngStyle]="{'margin-top': '0', 'background-size': step+'px '+ step+'px'}" class="overlaydrop">
+      </div>
+      <div [ngStyle]="{'height': heightQuestionCenterContent}">
+        <div *ngIf="currentSlideName!=''" class='atlasslidename'>{{currentSlideName}}</div>
+        <div *ngFor="let c of components[currentSlideId]; let i = index">
+          <div class="c-item" [ngSwitch]="c.componentType"
+            [ngStyle]="{'top': c.posY + 'px', 'left': c.posX + 'px', 'position' : 'absolute'}">
+            <i class="material-icons" [ngClass]="{'dragging' : draggingId == c.id}" (onDragStart)="ondragstart(c.id)"
+              [dragEnabled]="true" dnd-draggable
+              [dragData]="{'index': i, 'type': c.componentType, 'updated': true}">&#xE89F;</i>
+            <i class="material-icons" (click)="configComponentModal(c)">&#xE8B8;</i>
+            <i class="material-icons erase-button" (click)="removeComponent(i)">&#xE5CD;</i>
+            <br />
+            <label *ngIf="c.label && c.componentType!='CHECKBOX'">{{c.label}}</label>
+
+            <div *ngSwitchCase="'TEXT'" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">
+              <input id="{{c.id}}" class="input-text" *ngSwitchCase="'TEXT'" [attr.maxlength]="c.chars"
+                [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}" type="text" name="{{c.name}}">
+            </div>
+
+            <div *ngSwitchCase="'TEXTAREA'" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">
+              <textarea id="{{c.id}}" class="input-text" *ngSwitchCase="'TEXTAREA'" [attr.cols]="c.cols"
+                [attr.rows]="c.rows" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}" type="text"
+                name="{{c.name}}"></textarea>
+            </div>
+
+            <div id="{{c.id}}" *ngSwitchCase="'RADIO'">
+              <div *ngFor="let r of c.radioComponent; let y = index" class='formInputCheckRadio'>
+                <input class="class-radio" id="{{c.id}}_{{y}}" style="width: 15px;" type="radio" name="{{c.groupName}}">
+                <label for="{{c.id}}__{{y}}">{{r.label}}</label><br>
+              </div>
+            </div>
+            <div *ngSwitchCase="'CHECKBOX'" class='formInputCheckRadio'>
+              <input id="{{c.id}}" style="height: 15px !important; width: 15px !important;" type="checkbox"
+                name="{{c.groupName}}">
+              <label for="{{c.id}}">{{c.label}}</label>
+            </div>
+            <div *ngSwitchCase="'RANGE'" class='rangecontainer' id="{{c.id}}" [ngStyle]="{'width': c.dimWidth +'px'}">
+              <input name="{{c.name}}"
+                [attr.list]="c.options?.showticks==true || c.options?.showticks=='true' ? 'tickmarks_'+c.id :''"
+                type="range" min='{{c.min}}' max='{{c.max}}' step='{{c.step}}'
+                [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}" />
+
+              <ul class='rangelabel' *ngIf="c.options?.showlabels==true || c.options?.showlabels=='true'">
+                <li *ngFor="let v of c['labels']">{{v.label}}</li>
+              </ul>
+              <datalist id="tickmarks_{{c.id}}" *ngIf="c.options?.showticks==true || c.options?.showticks=='true'"
+                [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">
+                <option *ngFor="let v of c['ticks']" value="{{v.value}}">
+              </datalist>
+            </div>
+            <div *ngSwitchCase="'IMAGE'" class="e-image" id="image_{{c.id}}">
+              <img [urlApi]="c.url" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}"
+                id="{{c.id}}" />
+            </div>
+            <div *ngSwitchCase="'VIDEO'" class="e-image">
+              <img [urlApi]="c.url"
+                [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px', 'object-fit':'contain', 'background': '#000'}"
+                id="{{c.id}}" />
+            </div>
+
+            <div *ngSwitchCase="'TXTFILE'" class="e-image">
+              <div [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px', 'text-align' : 'center'}"
+                id="{{c.id}}">
+                <i class="fa fa-download"
+                  [ngStyle]="{'font-size': (c.dimWidth+c.dimHeight)/10 +'px', 'display':'block'}"></i>
+                <span>{{c.name}}</span>
+              </div>
+              <!-- <img [urlApi]="c.url" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}" id="{{c.id}}" /> -->
+            </div>
+
+            <div *ngSwitchCase="'ELANFILE'" class="e-image">
+              <div [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px', 'text-align' : 'center'}"
+                id="{{c.id}}">
+                <i class="fa fa-download"
+                  [ngStyle]="{'font-size': (c.dimWidth+c.dimHeight)/10 +'px', 'display':'block'}"></i>
+                <span>{{c.name}}</span>
+              </div>
+            </div>
+            <div *ngSwitchCase="'CLICK_AREA'" class="e-clickarea">
+              <div id="{{c.id}}" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}"></div>
+            </div>
+
+            <div *ngSwitchCase="'TEXTBLOCK'" class="e-textblock">
+              <div id="{{c.id}}" [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">
+                <div [froalaView]="c.text"></div>
+              </div>
+            </div>
+
+            <button *ngSwitchCase="'BUTTON'" class="btn btn-{{c.options.bstyle}}"
+              [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">{{c.text}}</button>
+
+            <div id="{{c.id}}" [ngClass]="{'table-overflow' : !!c.options?.scrollable}" *ngSwitchCase="'CHECKABLETABLE'"
+              [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px' ,'object-fit': 'contain'}">
+
+              <div *ngIf="c.tableComponent" style="background-color:white;height: inherit;">
+                <table [ngStyle]="{'transform':'scale('+c.scale+')'}" class="table table-bordered"
+                  style="box-shadow: 10px 10px 5px #dedede;height: inherit;">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th *ngFor="let col of c.tableComponent[1];">{{col.label}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of c.tableComponent[0]; let i = index">
+                      <td>{{row.label}}</td>
+                      <td *ngFor="let col of c.tableComponent[1]; let j = index">
+                        <md-checkbox [checked]="isInCheckedString(c,i,j)" (change)=updateCheckedString(c,i,j)>
+                        </md-checkbox>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div *ngSwitchCase="'UPLOADS'" class="e-uploadsarea">
+              <div id="{{c.id}}" fxLayoutAlign="center center"
+                [ngStyle]="{'width': c.dimWidth +'px', 'height': c.dimHeight + 'px'}">
+                <img src="assets/img/upload.png" alt="upload" style="height: 30%; width:auto" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="s-right" [ngStyle]="{'min-height': hieghtQuestion}">
+    <md-tab-group (selectChange)="changeTab($event.index)">
+      <md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE413;</i>
+        </ng-template>
+        <div *ngIf="allMedias['PHOTO']" class="m-body" [ngStyle]="{'height': heightContentTab}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div *ngIf="gridView">
+            <div class="image-body" *ngFor="let m of allMedias['PHOTO']; let i = index" style="margin: 5px 0px;">
+              <img [urlApi]="m.mediaThumbPath" width="100%" dnd-draggable
+                [dragData]="{'type': 'IMAGE', 'updated': false, url: m.mediaThumbPath, mediaId: m.mediaId}"
+                (onDragStart)="ondragstart(null,$event)" />
+            </div>
+          </div>
+          <md-list *ngIf="listView">
+            <md-list-item *ngFor="let m of allMedias['PHOTO']; let i = index">
+              <div class="pull-left" class="list-left">
+                <img [urlApi]="m.mediaThumbPath" width="100%" height="100%" dnd-draggable
+                  [dragData]="{'type': 'IMAGE', 'updated': false, url: m.mediaThumbPath, mediaId: m.mediaId}"
+                  (onDragStart)="ondragstart(null,$event)" />
+              </div>
+              <div class="m-icon list-right">
+                {{ m.mediaName}}
+              </div>
+            </md-list-item>
+          </md-list>
+        </div>
+      </md-tab>
+      <md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE04A;</i>
+        </ng-template>
+        <div *ngIf="allMedias['VIDEO']" class="m-body" [ngStyle]="{'height': heightContentTab}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div *ngIf="gridView">
+            <div class="image-body" *ngFor="let m of allMedias['VIDEO']; let i = index">
+              <img [urlApi]="m.mediaThumbPath" width="100%" height="100%" dnd-draggable
+                [dragData]="{'type': 'VIDEO', 'updated': false, url: m.mediaThumbPath, mediaId: m.mediaId}"
+                (onDragStart)="ondragstart(null,$event)" />
+            </div>
+          </div>
+          <md-list *ngIf="listView">
+            <md-list-item *ngFor="let m of allMedias['VIDEO']; let i = index" style="margin: 5px 0px;">
+              <div class="pull-left" class="list-left">
+                <img [urlApi]="m.mediaThumbPath" width="100%" dnd-draggable
+                  [dragData]="{'type': 'VIDEO', 'updated': false, url: m.mediaThumbPath, mediaId: m.mediaId}"
+                  (onDragStart)="ondragstart(null,$event)" />
+              </div>
+              <div class="m-icon list-right">
+                {{ m.mediaName}}
+              </div>
+            </md-list-item>
+          </md-list>
+        </div>
+      </md-tab>
+      <!--<md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE030;</i>
+        </ng-template>
+        <div *ngIf="allMedias['AUDIO']" class="m-body" [ngStyle]="{'height': heightContentTab}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div class="image-body" *ngFor="let m of allMedias['AUDIO']; let i = index">
+            <img [urlApi]="m.mediaThumbPath" width="100%" height="100%" />
+          </div>
+        </div>
+      </md-tab>-->
+      <md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE02F;</i>
+        </ng-template>
+        <div *ngIf="allMedias['TEXT']" class="m-body" [ngStyle]="{'height': heightContentTab}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div *ngIf="gridView">
+            <div class="image-body" *ngFor="let m of allMedias['TEXT']; let i = index">
+              <img [urlApi]="m.mediaThumbPath" width="100%" height="100%" dnd-draggable
+                [dragData]="{'type': 'TXTFILE', 'updated': false, url: m.mediaThumbPath, mediaId: m.mediaId, mediaName : m.mediaName}"
+                (onDragStart)="ondragstart(null,$event)" />
+            </div>
+          </div>
+          <md-list *ngIf="listView">
+            <md-list-item *ngFor="let m of allMedias['TEXT']; let i = index" style="margin: 5px 0px;">
+              <div class="pull-left" class="list-left">
+                <img [urlApi]="m.mediaThumbPath" width="100%" height="100%" dnd-draggable
+                  [dragData]="{'type': 'TXTFILE', 'updated': false, url: m.mediaThumbPath, mediaId: m.mediaId , mediaName : m.mediaName}"
+                  (onDragStart)="ondragstart(null,$event)" />
+              </div>
+              <div class="m-icon list-right">
+                {{ m.mediaName}}
+              </div>
+            </md-list-item>
+          </md-list>
+        </div>
+      </md-tab>
+      <md-tab>
+        <ng-template md-tab-label>
+          <i class="material-icons m-material-icons">&#xE02F;</i>
+        </ng-template>
+        <div *ngIf="allMedias['ELAN']" class="m-body" [ngStyle]="{'height': heightContentTab}">
+          <i *ngIf="mediaLoading" class="fa fa-circle-o-notch fa-spin"></i>
+          <div *ngIf="gridView">
+            <div class="image-body" *ngFor="let m of allMedias['ELAN']; let i = index">
+              <img [urlApi]="m.mediaThumbPath" width="100%" height="100%" dnd-draggable
+                [dragData]="{'type': 'ELANFILE', 'updated': false, url: m.mediaThumbPath, mediaId: m.mediaId, mediaName : m.mediaName}"
+                (onDragStart)="ondragstart(null,$event)" />
+            </div>
+          </div>
+          <md-list *ngIf="listView">
+            <md-list-item *ngFor="let m of allMedias['ELAN']; let i = index" style="margin: 5px 0px;">
+              <div class="pull-left" class="list-left">
+                <img [urlApi]="m.mediaThumbPath" width="100%" height="100%" dnd-draggable
+                  [dragData]="{'type': 'ELANFILE', 'updated': false, url: m.mediaThumbPath, mediaId: m.mediaId, mediaName : m.mediaName}"
+                  (onDragStart)="ondragstart(null,$event)" />
+              </div>
+              <div class="m-icon list-right">
+                {{ m.mediaName}}
+              </div>
+            </md-list-item>
+          </md-list>
+        </div>
+      </md-tab>
+    </md-tab-group>
+    <div style="position:absolute;right:4%;top:2px;z-index: 1;">
+      <a href="javascript:void(0)"><i class="material-icons" (click)="setListView()">list</i></a>
+      <a href="javascript:void(0)"><i class="material-icons" (click)="setGridView()">apps</i></a>
+    </div>
+  </div>
+</div>
+<div class="slide-foo">
+  <div class="f-left">
+    <div class="new-question" style="cursor: pointer;" (click)="backQuestion()">
+      <img src="assets/img/new-question-icon.PNG" alt="question" width="40px" height="10px"> SECTION
+    </div>
+  </div>
+  <div class="f-center" dnd-sortable-container [sortableData]="question.slides">
+    <div *ngFor="let s of question.slides; let i = index" (click)="changeSlide(s.slideId)">
+      <div class="question-info" [ngClass]="{'selected': s.slideId == currentSlideId}" (dragend)="saveQuestionOrder()"
+        dnd-sortable [sortableIndex]="i">
+        <i class="material-icons" (click)="deleteSlide(s);">&#xE872;</i>
+        <i class="material-icons" (click)="configSlideModal(s)">&#xE8B8;</i>
+        <br /> <span *ngIf="!!s.options?.name">{{s.options?.name.substr(0, 8)}}</span>
+      </div>
+      <div class="sperator-right">
+        <i class="material-icons">&#xE037;</i>
+      </div>
+    </div>
+
+    <div class="question-info" style="background-color: #1e4d59;"
+      mdTooltip="{{'tooltip.actions.atlas.components.new_slide' | translate }}" mdTooltipPosition="above">
+      <i *ngIf="!questionLoading" (click)="addSlide()" class="material-icons">&#xE147;</i>
+      <i *ngIf="!questionLoading" (click)="importSlide()" class="material-icons">&#xE8D7;</i>
+      <i *ngIf="questionLoading" class="question-icon fa fa-circle-o-notch fa-spin"></i>
+      <br /> New Silde
+    </div>
+
+  </div>
+  <div class="f-right">
+    <button class="new-question" (click)="undoComponents()" [disabled]='!shouldUndo()'
+      mdTooltip="{{'tooltip.actions.atlas.components.undo' | translate }}" mdTooltipPosition="above">
+      <i class="material-icons">&#xE166;</i> <br /> Undo
+    </button>
+    <div class="new-question" (click)="saveQuestion()"
+      mdTooltip="{{'tooltip.actions.atlas.components.save' | translate }}" mdTooltipPosition="above">
+      <i class="material-icons">&#xE161;</i> <br /> Save
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="main-container" [ngStyle]="{'min-height': wHeight}">
+    <div class="e-card">
+      <md-card>
+        <div class="card-title">
+          Report list
+        </div>
+        <md-card-content>
+          <div class="e-content">
+            <div style="width: 100%;" *ngIf="loading">
+              <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+            </div>
+            <table class="table table-striped a-table-hover" id="tbAdmin">
+                <thead>
+                <tr>
+                  <th>{{'report.table.testname' | translate}}</th>
+                  <th>{{'report.table.id' | translate}}</th>
+                  <th>{{'report.table.date' | translate}}</th>
+                  <th>{{'report.table.action' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngIf="loading">
+                  <td colspan="5">
+                    <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+                  </td>
+                </tr>
+                <tr *ngFor="let e of reports; let i = index">
+                  <td>{{e.reportTestName}}</td>
+                  <td>{{e.reportId}}</td>
+                  <td>{{e.reportDate}}</td>
+                  <td><button (click)="downloadCsv(e)">Download</button></td>
+                </tr>
+                </tbody>
+              </table>
+          </div>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+  

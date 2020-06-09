@@ -1,0 +1,69 @@
+<div class="config-question-container">
+  <form #nForm="ngForm">
+    <div class="config-question-title">
+      Section edit
+    </div>
+    <div class="e-loading" *ngIf="isLoading">
+      Loading...
+      <md-progress-bar mode="indeterminate"></md-progress-bar>
+    </div>
+    <div class="config-question-body">
+      <div class="m-action">
+        <md-input-container>
+          <input mdInput placeholder="{{'admin.filter.name' | translate}}" name="name" [(ngModel)]="search.name" #name="ngModel" id="name">
+        </md-input-container>
+        <md-input-container>
+          <input mdInput placeholder="{{'admin.filter.email' | translate}}" name="email" [(ngModel)]="search.email" #email="ngModel" id="email">
+        </md-input-container>
+        <button md-button class="m-btn-filter" (click)="filterListUser()"><i class="material-icons m-icon-filter">&#xE152;</i>
+        </button>
+        <!-- <form [formGroup]="formGroup">
+          <md-select name="role" formControlName="role">
+            <md-option *ngFor="let r of roles" (click)="toggleRole()" [value]="r.key">
+              {{ r.value }}
+            </md-option>
+          </md-select>
+        </form> -->
+        <select placeholder="Select a language" style="" (change)="toggleRole($event.target.value)">
+          <option class="mat-checkbox" [selected]="r.key === role" *ngFor="let r of roles" [value]="r.key">
+            {{ r.value }}
+          </option>
+        </select>
+
+      </div>
+
+      <div class="m-body">
+        <table class="table table-striped a-table-hover" id="tbAdmin">
+          <thead>
+            <tr>
+              <th style="width:100px;">{{'admin.table.name' | translate}}</th>
+              <th style="width:100px;">{{'admin.table.surname' | translate}}</th>
+              <th style="width:260px;">{{'admin.table.email' | translate}}</th>
+              <th style="width:200px;">{{'admin.table.profile' | translate}}</th>
+              <th style="width:50px;">{{'admin.table.status' | translate}}</th>
+              <th style="width:50px;">{{'admin.table.content_provider' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users; let i = index">
+              <td style="width:100px;">{{user.name}}</td>
+              <td style="width:100px;">{{user.surname}}</td>
+              <td style="width:260px;">{{user.email}}</td>
+              <td style="width:200px;">{{user.role | role }}</td>
+              <td style="width:50px;">{{user.deleted | status}}</td>
+              <!-- <td style="text-align: center;"> <md-checkbox [checked]="user.editor" (click)="chooseEditor(i, user)"></md-checkbox></td> -->
+              <td style="text-align: center;width:50px;">
+                <md-checkbox [checked]="user.contentProvider" (click)="chooseContentProvider(i, user)"></md-checkbox>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="question-footer">
+      <button md-button color="primary" class="btn-test" [md-dialog-close]="true"><i class="material-icons">&#xE5CD;</i>
+        <br />Close
+      </button>
+    </div>
+  </form>
+</div>

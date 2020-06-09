@@ -1,0 +1,509 @@
+@import "../../../share/theme.scss";
+
+.main-container {
+  background-color: $backgroud-e;
+
+  .mat-input-container {
+    padding: 5px 15px;
+    width: 100%;
+    color: #959595;
+  }
+
+  .search-icons {
+    float: right;
+    cursor: pointer;
+  }
+
+  .mat-input-element {
+    width: auto;
+  }
+
+  .mat-select-placeholder {
+    padding: 0 12px;
+  }
+
+  .mat-select {
+    width: 60%;
+    border: 1px solid #00ade5;
+  }
+
+  .multi {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .single {
+    display: flex;
+    flex-flow: column;
+    font-size: 0.8em;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .single:hover {
+    color: #00ade5;
+  }
+
+  .view {
+    display: flex;
+    text-align: center;
+    margin: 10px;
+    align-items: center;
+    text-decoration: none;
+  }
+}
+
+.sb-style.sb-style-colors .facebook button,
+.sb-style.sb-style-colors .facebook a {
+  background: #4267b2
+}
+
+.sb-style.sb-style-colors .envelope button,
+.sb-style.sb-style-colors .envelope a {
+  background: #4267b2
+}
+
+.sb-style.sb-style-colors .facebook button:hover,
+.sb-style.sb-style-colors .facebook a:hover {
+  background: #35528e
+}
+
+.sb-style.sb-style-colors .envelope button:hover,
+.sb-style.sb-style-colors .envelope a:hover {
+  background: #35528e
+}
+
+.sb-style.sb-style-colors .twitter button,
+.sb-style.sb-style-colors .twitter a {
+  background: #00acee
+}
+
+.sb-style.sb-style-colors .twitter button:hover,
+.sb-style.sb-style-colors .twitter a:hover {
+  background: #404749
+}
+
+.sb-style.sb-style-colors .googleplus button {
+  background: #db4437
+}
+
+.sb-style.sb-style-colors .googleplus button:hover {
+  background: #af362c
+}
+
+.sb-style.sb-style-colors .stumbleupon button {
+  background: #eb4924
+}
+
+.sb-style.sb-style-colors .stumbleupon button:hover {
+  background: #bc3a1d
+}
+
+.sb-style.sb-style-colors .linkedin button {
+  background: #006fa6
+}
+
+.sb-style.sb-style-colors .linkedin button:hover {
+  background: #005985
+}
+
+.sb-style.sb-style-colors .pinterest button {
+  background: #bd081c
+}
+
+.sb-style.sb-style-colors .pinterest button:hover {
+  background: #970616
+}
+
+.sb-style.sb-style-colors .reddit button {
+  background: #ff4006
+}
+
+.sb-style.sb-style-colors .reddit button:hover {
+  background: #cc3305
+}
+
+.sb-style.sb-style-colors .tumblr button {
+  background: #36465d
+}
+
+.sb-style.sb-style-colors .tumblr button:hover {
+  background: #2b384a
+}
+
+.sb-style.sb-style-colors .whatsapp button {
+  background: #25d366
+}
+
+.sb-style.sb-style-colors .whatsapp button:hover {
+  background: #1ea952
+}
+
+share-buttons,
+.share-buttons {
+  width: 100%
+}
+
+.sb-style {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin: 1em auto;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap
+}
+
+.sb-style .sb-button {
+  min-width: 60px;
+  padding: 5px;
+  -webkit-box-orient: vertical;
+  -ms-flex-direction: column;
+  flex-direction: column
+}
+
+.sb-style .sb-button,
+.sb-style button,
+.sb-style a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-direction: normal
+}
+
+.sb-style button,
+.sb-style a {
+  -webkit-box-orient: horizontal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: transparent;
+  border-radius: .2em;
+  padding: .5em .9em;
+  font-size: 1em;
+  color: #fff
+}
+
+.sb-style button:hover,
+.sb-style a:hover {
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease
+}
+
+.sb-style .sb-show-count {
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  max-width: 6em
+}
+
+.sb-style .sb-template {
+  margin: 0 auto
+}
+
+.sb-style .sb-count {
+  margin-left: .8em;
+  font-size: .75em;
+  font-family: Tahoma;
+  text-align: center;
+  position: relative;
+  color: #fff;
+  font-weight: 700
+}
+
+a:hover,
+button {
+  cursor: pointer;
+  outline: 0;
+  border: 0
+}
+
+.facebook {
+  -webkit-box-ordinal-group: 2;
+  -ms-flex-order: 1;
+  order: 1
+}
+
+.envelope {
+  -webkit-box-ordinal-group: 4;
+  -ms-flex-order: 3;
+  order: 3
+}
+
+.twitter {
+  -webkit-box-ordinal-group: 3;
+  -ms-flex-order: 2;
+  order: 2
+}
+
+.googleplus {
+  -webkit-box-ordinal-group: 4;
+  -ms-flex-order: 3;
+  order: 3
+}
+
+.pinterest {
+  -webkit-box-ordinal-group: 6;
+  -ms-flex-order: 5;
+  order: 5
+}
+
+.linkedin {
+  -webkit-box-ordinal-group: 5;
+  -ms-flex-order: 4;
+  order: 4
+}
+
+.tumblr {
+  -webkit-box-ordinal-group: 9;
+  -ms-flex-order: 8;
+  order: 8
+}
+
+.reddit {
+  -webkit-box-ordinal-group: 8;
+  -ms-flex-order: 7;
+  order: 7
+}
+
+.stumbleupon {
+  -webkit-box-ordinal-group: 10;
+  -ms-flex-order: 9;
+  order: 9
+}
+
+.whatsapp {
+  -webkit-box-ordinal-group: 7;
+  -ms-flex-order: 6;
+  order: 6
+}
+
+.select-custom {
+  width: 50%;
+  height: 75%;
+  border: 1px solid #00ade5;
+}
+
+.m-material-icons {
+  font-size: 18px;
+  position: relative;
+  top: 5px;
+}
+
+md-tab-group {
+  /deep/.mat-tab-label {
+    line-height: 40px;
+    height: 40px;
+    min-width: 90px;
+  }
+
+  /deep/.mat-ink-bar {
+    color: #00ade5;
+    height: 3px;
+  }
+
+  /deep/md-ink-bar {
+    width: 90px;
+  }
+
+  /deep/.mat-tab-label-active {
+    color: #00ade5;
+    background-color: white;
+  }
+
+  /deep/.mat-tab-body-content {
+    padding: 0 15px 15px 15px;
+  }
+}
+
+.card-title {
+  color: #959595;
+}
+
+.col-md-3 {
+  margin-bottom: 40px;
+}
+
+.m-btn-filter {
+  background-color: #00ade5;
+  min-width: 0px;
+  color: white;
+  line-height: 30px;
+  padding: 0 5px 0 5px;
+  margin-left: 20px;
+}
+
+.m-icon-filter {
+  font-size: 18px;
+}
+
+.btn-acion {
+  text-align: right;
+}
+
+.btn-add-photo {
+  color: #00ade5;
+  font-weight: normal !important;
+}
+
+.m-body {
+  margin-top: 100px;
+  width: -moz-calc(100% - 5px);
+  width: -webkit-calc(100% - 5px);
+}
+
+.m-image {
+  padding: 10px;
+  position: relative;
+  color: white;
+}
+
+.top-right {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+}
+
+.top-right a i {
+  color: #61696b;
+}
+
+.top-right a i:hover {
+  color: #00ade5;
+}
+
+md-spinner {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: 10px;
+  left: 10px;
+  opacity: 0.0;
+}
+
+md-spinner.show {
+  opacity: 1.0;
+}
+
+.single-mini {
+  color: #959595;
+  font-size: 1.4em;
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.65), 0 0 5px rgba(255, 255, 255, 0.65);
+}
+
+.m-image:hover .m-image-footer {
+  display: block;
+}
+
+.m-image-footer {
+  padding: 8px;
+  position: absolute;
+  height: 50px;
+  // top: 100px;
+  color: #ffffff;
+  font-size: 10pt;
+  background-color: #61696b;
+  width: -webkit-calc(100% - 20px);
+  // display: none;
+}
+
+
+.m-icon {
+  float: right;
+}
+
+.m-text {
+  display: inline-block;
+}
+
+.m-icon {
+  display: inline-block;
+
+  .material-icons {
+    font-size: 12pt !important;
+    cursor: pointer;
+    padding: 8px 3px 0 0px;
+
+    &.search-icons {
+      float: right;
+    }
+  }
+}
+
+.m-image {
+  img {
+    height: 140px;
+  }
+}
+
+.list-left {
+  width: 40%;
+}
+
+.list-center {
+  width: 30%;
+}
+
+.mat-list-item-content {
+  height: 100px !important;
+}
+
+.e-content {
+  min-height: 550px;
+}
+
+.mat-list {
+  height: 100%;
+
+  .mat-list-item {
+    height: 100%;
+    display: flex;
+    align-content: center;
+    margin: auto;
+  }
+}
+
+vg-player {
+  // width: inherit;
+  // height: inherit;
+}
+
+video {
+  width: inherit;
+  height: inherit;
+}
+
+.list-left {
+  width: 50%;
+}
+
+.list-right {
+  width: 50%;
+  height: 100%;
+  margin-left: 10px;
+
+  h2 {
+    a {
+      color: #000;
+      cursor: pointer;
+    }
+  }
+
+  hr {
+    border-top: 1px solid #000;
+  }
+
+  .description {
+    font-size: 14px;
+    color: #959595;
+  }
+}
+
+.mat-list-item-content {
+  height: 100px !important;
+}
+
+.mat-list .mat-list-item {
+  display: inline-block;
+  align-items: top;
+}

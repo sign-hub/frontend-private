@@ -1,0 +1,114 @@
+<div class="input-upload">
+    <form #nForm="ngForm">
+        <div class="input-title">
+            Table configuration
+        </div>
+        <div class="input-body">
+
+            <md-input-container class="p-full-width">
+                <input mdInput placeholder="Group name" name="groupName" [(ngModel)]="input.groupName" #groupName="ngModel" id="groupName"
+                    required>
+            </md-input-container>
+
+            <div class="row">
+
+
+                <div class="col-md-6">
+                    <div style="margin:10px">
+
+                        <div class="row">
+                            <strong>Rows</strong>
+                            <hr>
+                        </div>
+
+                        <!-- elenco colonne inserite -->
+                        <div *ngIf="!input.tableComponent[0].length" style="text-align:center">
+                            No Labels! 
+                        </div>
+
+                        <div class="row">
+                            <div *ngIf="input.tableComponent[0].length" class="tablescroll">
+                                <div *ngFor="let item of input.tableComponent[0] let idx = index">
+                                    <div class="col-md-4-" style="word-wrap: break-word;">
+                                        {{idx}}: Label : {{item.label}}, Limit: {{!!item.limit ? item.limit : '0'}}
+                                    </div>
+                                    <div class="col-md-8-">
+                                        <button md-button color="primary" (click)="deleteTable(0,idx)">
+                                            <i class="material-icons">&#xE872;</i> Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-full-width addTable">
+                                <md-input-container class="p-full-width">
+                                    <input mdInput placeholder="Label Row" name="labRow" [(ngModel)]="labelRow" #name="ngModel">
+                                </md-input-container>
+                                <md-input-container class="p-full-width">
+                                    <input mdInput placeholder="Limit" name="limitRow" [(ngModel)]="limitRow" #name="ngModel">
+                                </md-input-container>
+                                <button md-button color="primary" (click)="addNewLabel(0)">Add Label Row</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div style="margin:10px">
+
+                        <div class="row">
+                            <strong>Cols</strong>
+                            <hr>
+                        </div>
+
+
+                        <!-- elenco colonne inserite -->
+                        <div *ngIf="!input.tableComponent[1].length" style="text-align:center">
+                            No Labels!
+                        </div>
+
+                        <div class="row">
+                            <div *ngIf="input.tableComponent[1].length" class="tablescroll">
+
+                                <div *ngFor="let item of input.tableComponent[1] let idx = index">
+                                    <div class="col-md-4-" style="word-wrap: break-word;">
+                                        {{idx}}: Label : {{item.label}}, Limit: {{!!item.limit ? item.limit : '0'}}
+                                    </div>
+                                    <div class="col-md-8-">
+                                        <button md-button color="primary" (click)="deleteTable(1,idx)">
+                                            <i class="material-icons">&#xE872;</i> Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-full-width addTable">
+                                <md-input-container class="p-full-width">
+                                    <input mdInput placeholder="Label Col" name="labCol" [(ngModel)]="labelCol" #name="ngModel">
+                                </md-input-container>
+                                <md-input-container class="p-full-width">
+                                    <input mdInput placeholder="Limit" name="limitCol" [(ngModel)]="limitCol" #name="ngModel">
+                                </md-input-container>
+                                <button md-button color="primary" (click)="addNewLabel(1)">Add Label Col</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:10px">
+                <md-checkbox [checked]="input.transition" (change)="changeTransition()" name="transition">Transition</md-checkbox>
+                <md-checkbox [checked]="input.notToSave" (change)="changeNotToSave()" name="notToSave">Not to save</md-checkbox>
+            </div>
+            <div class="row" style="margin:10px">
+                <md-checkbox [checked]="input.options?.scrollable" (change)="changeScrollable()" name="scrollable">Scrollable</md-checkbox>
+            </div>
+        </div>
+
+
+        <div class="input-footer">
+            <button md-button color="primary" (click)="save()" [disabled]="this.input.tableComponent[0].length == 0 || this.input.tableComponent[1].length == 0">
+                <i class="material-icons">&#xE161;</i> Save</button>
+            <button md-button color="primary" [md-dialog-close]="true">
+                <i class="material-icons">&#xE5CD;</i> Cancel</button>
+        </div>
+    </form>
+</div>

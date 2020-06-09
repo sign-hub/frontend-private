@@ -1,0 +1,30 @@
+<div class="main-container" [ngStyle]="{'min-height': wHeight}">
+  <div class="e-card">
+    <md-card>
+      <div class="card-title">
+        Test list
+      </div>
+      <md-card-content>
+        <div class="e-content">
+          <div style="width: 100%;" *ngIf="loading">
+            <md-progress-bar class="app-progress" mode="indeterminate"></md-progress-bar>
+          </div>
+          <div *ngIf="loading" class="testlist-overlay"></div>
+          <div class="e-list" *ngFor="let e of data; let i = index">
+            <md-checkbox [(ngModel)]="e.checked" name="check" (change)="chooseTest(e)">{{e.TestName}}</md-checkbox>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+    <div class="e-footer">
+      <button md-button color="primary"><i class="material-icons" (click)="openTestPreview()">search</i> View</button>
+      <button md-button (click)="editTest()" [disabled]="!isEdit" color="primary"><i class="material-icons">border_color</i> Edit</button>
+      <button md-button color="primary" (click)="cloneTest()" [disabled]="isLoading">
+        <i *ngIf="isLoading" class="fa fa-circle-o-notch fa-spin"></i>
+        <i *ngIf="!isLoading" class="material-icons">filter_none</i>
+        Clone
+      </button>
+      <button *ngIf="isRemove" md-button color="primary" [disabled]="!isRemove" (click)="deleteTest()"><i class="material-icons">&#xE872;</i> Remove</button>
+    </div>
+  </div>
+</div>
