@@ -1,4 +1,16 @@
-# Private platform frontend
+#FIX MOCK
+On file `/node_modules/\@angular/http/\@angular/http/testing.es5.js` and
+`/node_modules/\@angular/http/\@angular/http/testing.js` on line 53 modify as follow:
+
+```javascript
+if (this.readyState === ReadyState.Done || this.readyState === ReadyState.Cancelled) {
+            /*throw new Error('Connection has already been resolved');*/
+            console.log('Connection has already been resolved');
+        }
+```
+
+
+# EletticaFrontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1.
 

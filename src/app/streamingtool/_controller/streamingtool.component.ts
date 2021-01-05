@@ -1,12 +1,12 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {NavigationExtras, Router} from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
-import {MENUS} from '../../home/menu.const';
-import {HomeService} from '../../home/_service/home.service';
-import {ProfileSerivce} from '../../profile/_service/profile.service';
-import {BaseComponent} from '../../share/base.component';
-import {MdSnackBar} from '@angular/material';
-import {MdDialog} from '@angular/material';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { MENUS } from '../../home/menu.const';
+import { HomeService } from '../../home/_service/home.service';
+import { ProfileSerivce } from '../../profile/_service/profile.service';
+import { BaseComponent } from '../../share/base.component';
+import { MdSnackBar } from '@angular/material';
+import { MdDialog } from '@angular/material';
 import { StreamingToolService } from '../_service/streamingtool.service';
 import { MockBackendService } from '../_service/mock-backend.service';
 
@@ -16,19 +16,19 @@ import { MockBackendService } from '../_service/mock-backend.service';
   styleUrls: ['../_views/streamingtool.component.scss'],
   providers: [MockBackendService]
 })
-export class StreamingToolComponent extends BaseComponent implements OnInit, OnDestroy {
+export class StreamingToolComponent extends BaseComponent implements OnInit {
   menus: any;
   user: any;
   movies: any;
 
   constructor(public router: Router,
-              private translate: TranslateService,
-              private homeService: HomeService,
-              private profileSerivce: ProfileSerivce,
-              public dialog: MdDialog,
-              private mockBackendService: MockBackendService,
-              private streamingToolService: StreamingToolService,
-              public mdSnackBar: MdSnackBar) {
+    private translate: TranslateService,
+    private homeService: HomeService,
+    private profileSerivce: ProfileSerivce,
+    public dialog: MdDialog,
+    private mockBackendService: MockBackendService,
+    private streamingToolService: StreamingToolService,
+    public mdSnackBar: MdSnackBar) {
     super(router, mdSnackBar);
     this.menus = MENUS;
     /*this.mockBackendService.start();*/
@@ -38,24 +38,24 @@ export class StreamingToolComponent extends BaseComponent implements OnInit, OnD
     this.mockBackendService.start();
     this.user = {};
     this.loadUserInfo();
-    if (localStorage.getItem('userInfo') !== null && JSON.parse(localStorage.getItem('userInfo')).role == 'AT_CON_PRO'){
+    if (localStorage.getItem('userInfo') !== null && JSON.parse(localStorage.getItem('userInfo')).role == 'AT_CON_PRO') {
       this.router.navigate(['home/atlas']);
       return true;
     }
   }
 
-  ngOnDestroy(){
+  /* ngOnDestroy(){
     this.mockBackendService.finish();
-  }
+  } */
 
-  search(searchTerm: string){
+  search(searchTerm: string) {
 
     this.streamingToolService.requestLoadVideos('v').subscribe(res => {
       this.movies = res;
     });
   }
 
-  selectVideo(id){
+  selectVideo(id) {
 
     this.streamingToolService.requestgetVideo('4').subscribe(res => {
       console.log(res);
@@ -73,7 +73,7 @@ export class StreamingToolComponent extends BaseComponent implements OnInit, OnD
     });
   }
 
-  createTest(){
+  createTest() {
 
   }
 

@@ -1,6 +1,6 @@
 export class GrammarStatus {
   static NEW = 'NEW';
-  static DRAFT =  'DRAFT';
+  static DRAFT = 'DRAFT';
   static PUBLISHED = 'PUBLISHED';
 }
 
@@ -24,4 +24,5 @@ export class Grammar {
   grammarCopyrightInfo: string;
   grammarISBNInfo: string;
   grammarBibliographicalReference: string;
+  editedBy: string;
 }

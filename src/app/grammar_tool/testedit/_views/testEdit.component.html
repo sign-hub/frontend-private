@@ -134,23 +134,27 @@
           <md-placeholder>Grammar Name</md-placeholder>
           <input style="text-align: center;" mdInput [(ngModel)]="grammarTitle">
         </md-input-container>
-        <div style='display:flex'>
+        <!-- <div style='display:flex'>
           <md-input-container class="p-middle-width">
-            <md-placeholder>Sigh-Hub Grammar Series</md-placeholder>
+            <md-placeholder>SIGN-HUB Grammar Series</md-placeholder>
             <input style="text-align: center;" mdInput [(ngModel)]="grammar.grammarSignHubSeries">
           </md-input-container>
           <md-input-container class="p-middle-width">
             <md-placeholder>Sigh-Hub Grammar Series Number</md-placeholder>
             <input type='number' style="text-align: center;" mdInput [(ngModel)]="grammar.grammarSignHubSeriesNumber">
           </md-input-container>
-        </div>
+        </div> -->
         <md-input-container class="p-middle-width">
-          <md-placeholder>List of Sign-Hub Series grammars already published</md-placeholder>
+          <md-placeholder>List of SIGN-HUB Series grammars already published</md-placeholder>
           <textarea [attr.rows]="4" style="text-align: center;" mdInput
             [(ngModel)]="grammar.grammarOtherSignHubSeries"></textarea>
         </md-input-container>
         <md-input-container class="p-middle-width">
-          <md-placeholder>Editorial info</md-placeholder>
+          <md-placeholder>Edited by</md-placeholder>
+          <textarea [attr.rows]="4" style="text-align: center;" mdInput [(ngModel)]="grammar.editedBy"></textarea>
+        </md-input-container>
+        <md-input-container class="p-middle-width">
+          <md-placeholder>List of the editors</md-placeholder>
           <textarea [attr.rows]="4" style="text-align: center;" mdInput
             [(ngModel)]="grammar.grammarEditorialInfo"></textarea>
         </md-input-container>
@@ -159,9 +163,10 @@
           <textarea [attr.rows]="4" style="text-align: center;" mdInput
             [(ngModel)]="grammar.grammarCopyrightInfo"></textarea>
         </md-input-container>
-        <md-input-container class="p-full-width">
-          <md-placeholder>ISBN Info</md-placeholder>
-          <input style="text-align: center;" mdInput [(ngModel)]="grammar.grammarISBNInfo">
+        <md-input-container class="p-middle-width">
+          <md-placeholder>ISBN and DOI Info</md-placeholder>
+          <textarea [attr.rows]="4" style="text-align: center;" mdInput
+            [(ngModel)]="grammar.grammarISBNInfo"></textarea>
         </md-input-container>
         <md-input-container class="p-middle-width">
           <md-placeholder>Bibliographical reference for citation</md-placeholder>
